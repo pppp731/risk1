@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>风险哨兵 // RISK SENTINEL</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syncopate:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: rgba(20, 20, 30, 0.7);
+            --accent-cyan: #00f5d4;
+            --accent-pink: #ff006e;
+            --accent-yellow: #fee440;
+            --accent-red: #ef233c;
+            --text-primary: #e0e0e0;
+            --text-secondary: #8888a0;
+            --grid-line: rgba(0, 245, 212, 0.1);
+            --border-glow: rgba(0, 245, 212, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 动态网格背景 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* 扫描线效果 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+            opacity: 0.5;
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes scanline {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 头部设计 */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-glow);
+            margin-bottom: 40px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--bg-primary);
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.4);
+        }
+
+        .brand-text h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .brand-text p {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .target-company {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-yellow);
+            border: 1px solid var(--accent-yellow);
+            padding: 8px 16px;
+            border-radius: 4px;
+            background: rgba(254, 228, 64, 0.1);
+        }
+
+        /* 控制面板 */
+        .control-panel {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .analyze-btn {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 16px 40px;
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 2px solid var(--accent-cyan);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .analyze-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 245, 212, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .analyze-btn:hover::before {
+            left: 100%;
+        }
+
+        .analyze-btn:hover {
+            background: rgba(0, 245, 212, 0.1);
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.4);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 加载动画 */
+        .loading-container {
+            display: none;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 40px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-container.show {
+            display: flex;
+        }
+
+        .loading-text {
+            font-family: 'Space Mono', monospace;
+            color: var(--accent-cyan);
+        }
+
+        .loading-dots::after {
+            content: '';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0% { content: ''; }
+            25% { content: '.'; }
+            50% { content: '..'; }
+            75% { content: '...'; }
+            100% { content: ''; }
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(0, 245, 212, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-cyan);
+            width: 0%;
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        /* 仪表盘网格 */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px rgba(0, 245, 212, 0.15);
+        }
+
+        .metric-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .metric-value {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .metric-value.risk-low { color: #00c853; }
+        .metric-value.risk-medium { color: var(--accent-yellow); }
+        .metric-value.risk-high { color: var(--accent-red); }
+        .metric-value.risk-critical { color: var(--accent-pink); }
+
+        .metric-subtitle {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* 主内容区 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .panel-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+        }
+
+        .panel-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            background: rgba(0, 245, 212, 0.1);
+            color: var(--accent-cyan);
+            border-radius: 4px;
+            border: 1px solid var(--accent-cyan);
+        }
+
+        /* 图表容器 */
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* 风险列表 */
+        .risk-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .risk-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-cyan);
+            transition: all 0.3s ease;
+        }
+
+        .risk-item:hover {
+            background: rgba(0, 245, 212, 0.05);
+            transform: translateX(4px);
+        }
+
+        .risk-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .risk-indicator.high {
+            background: rgba(239, 35, 60, 0.2);
+            color: var(--accent-red);
+            border: 2px solid var(--accent-red);
+        }
+
+        .risk-indicator.medium {
+            background: rgba(254, 228, 64, 0.2);
+            color: var(--accent-yellow);
+            border: 2px solid var(--accent-yellow);
+        }
+
+        .risk-indicator.low {
+            background: rgba(0, 200, 83, 0.2);
+            color: #00c853;
+            border: 2px solid #00c853;
+        }
+
+        .risk-info {
+            flex: 1;
+        }
+
+        .risk-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .risk-desc {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .risk-count {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        /* 预警区 */
+        .alerts-section {
+            margin-bottom: 30px;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            border-left: 4px solid;
+            backdrop-filter: blur(10px);
+        }
+
+        .alert-item.critical {
+            border-color: var(--accent-pink);
+            background: linear-gradient(90deg, rgba(255, 0, 110, 0.1), transparent);
+        }
+
+        .alert-item.high {
+            border-color: var(--accent-red);
+            background: linear-gradient(90deg, rgba(239, 35, 60, 0.1), transparent);
+        }
+
+        .alert-item.medium {
+            border-color: var(--accent-yellow);
+            background: linear-gradient(90deg, rgba(254, 228, 64, 0.1), transparent);
+        }
+
+        .alert-icon {
+            font-size: 1.5rem;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-level {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .alert-level.critical { color: var(--accent-pink); }
+        .alert-level.high { color: var(--accent-red); }
+        .alert-level.medium { color: var(--accent-yellow); }
+
+        .alert-message {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        /* 新闻流 */
+        .news-stream {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .news-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .news-card {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            border-left: 3px solid var(--text-secondary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .news-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.02), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .news-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .news-card.risky {
+            border-left-color: var(--accent-red);
+            background: linear-gradient(90deg, rgba(239, 35, 60, 0.05), rgba(0, 0, 0, 0.3));
+        }
+
+        .news-card.positive {
+            border-left-color: #00c853;
+        }
+
+        .news-card.negative {
+            border-left-color: var(--accent-red);
+        }
+
+        .news-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 16px;
+        }
+
+        .news-title {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .news-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge-sentiment.positive {
+            background: rgba(0, 200, 83, 0.2);
+            color: #00c853;
+            border: 1px solid #00c853;
+        }
+
+        .badge-sentiment.negative {
+            background: rgba(239, 35, 60, 0.2);
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+        }
+
+        .badge-sentiment.neutral {
+            background: rgba(136, 136, 160, 0.2);
+            color: var(--text-secondary);
+            border: 1px solid var(--text-secondary);
+        }
+
+        .badge-risk {
+            background: rgba(255, 0, 110, 0.2);
+            color: var(--accent-pink);
+            border: 1px solid var(--accent-pink);
+        }
+
+        .badge-score {
+            background: rgba(0, 245, 212, 0.2);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+        }
+
+        .news-meta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .news-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .risk-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .risk-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            background: rgba(239, 35, 60, 0.15);
+            color: var(--accent-red);
+            border-radius: 4px;
+            border: 1px solid rgba(239, 35, 60, 0.3);
+        }
+
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-glow);
+            margin-top: 40px;
+        }
+
+        /* 错误状态 */
+        .error-state {
+            background: rgba(239, 35, 60, 0.1);
+            border: 1px solid var(--accent-red);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            color: var(--accent-red);
+        }
+
+        /* 动画 */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 结果区域 */
+        .results {
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header>
+            <div class="brand">
+                <div class="logo">RS</div>
+                <div class="brand-text">
+                    <h1>RISK SENTINEL</h1>
+                    <p>AI-POWERED RISK MONITORING SYSTEM // v2.0</p>
+                </div>
+            </div>
+            <div class="target-company">
+                TARGET: IF COCONUT WATER
+            </div>
+        </header>
+
+        <!-- 控制面板 -->
+        <div class="control-panel">
+            <button class="analyze-btn" onclick="startAnalysis()" id="analyzeBtn">
+                启动扫描 // INITIATE SCAN
+            </button>
+            <div class="loading-container" id="loading">
+                <span class="loading-text">ANALYZING DATA STREAMS<span class="loading-dots"></span></span>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 结果区域 -->
+        <div class="results" id="results">
+            <!-- 关键指标 -->
+            <div class="dashboard" id="dashboard">
+                <!-- 动态生成 -->
+            </div>
+
+            <!-- 预警区域 -->
+            <div class="alerts-section" id="alerts">
+                <!-- 动态生成 -->
+            </div>
+
+            <!-- 主内容区：图表 + 风险分布 -->
+            <div class="main-content">
+                <div class="panel">
+                    <div class="panel-header">
+                        <span class="panel-title">RISK DISTRIBUTION // 风险分布</span>
+                        <span class="panel-badge">RADAR VIEW</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="riskRadarChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <span class="panel-title">SENTIMENT ANALYSIS // 情感分析</span>
+                        <span class="panel-badge">PIE CHART</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="sentimentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 风险类型列表 -->
+            <div class="panel" style="margin-bottom: 30px;">
+                <div class="panel-header">
+                    <span class="panel-title">RISK BREAKDOWN // 风险明细</span>
+                    <span class="panel-badge">PRIORITY QUEUE</span>
+                </div>
+                <div class="risk-list" id="riskList">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+
+            <!-- 新闻流 -->
+            <div class="news-stream">
+                <div class="panel-header">
+                    <span class="panel-title">INTELLIGENCE FEED // 情报流</span>
+                    <span class="panel-badge" id="newsCount">0 ARTICLES</span>
+                </div>
+                <div class="news-grid" id="newsGrid">
+                    <!-- 动态生成 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer>
+            <p>SYSTEM STATUS: OPERATIONAL // DATA SOURCES: NEWSAPI + GNEWS + RSS // LAST UPDATE: <span id="lastUpdate">--</span></p>
+        </footer>
+    </div>
+
+    <script>
+        // Chart.js 配置
+        let riskRadarChart = null;
+        let sentimentChart = null;
+
+        // Chart.js 默认配置
+        Chart.defaults.color = '#8888a0';
+        Chart.defaults.borderColor = 'rgba(0, 245, 212, 0.1)';
+        Chart.defaults.font.family = "'Space Mono', monospace";
+
+        function startAnalysis() {
+            const btn = document.getElementById('analyzeBtn');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+
+            btn.disabled = true;
+            btn.textContent = 'SCANNING...';
+            loading.classList.add('show');
+            results.classList.remove('show');
+
+            fetch('/api/analyze')
+                .then(response => response.json())
+                .then(data => {
+                    loading.classList.remove('show');
+                    btn.disabled = false;
+                    btn.textContent = '重新扫描 // RESCAN';
+
+                    if (data.success) {
+                        displayResults(data.data);
+                        document.getElementById('lastUpdate').textContent = new Date().toLocaleString('zh-CN');
+                    } else {
+                        showError(data.error);
+                    }
+                })
+                .catch(error => {
+                    loading.classList.remove('show');
+                    btn.disabled = false;
+                    btn.textContent = '启动扫描 // INITIATE SCAN';
+                    showError('CONNECTION FAILED: ' + error.message);
+                });
+        }
+
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+
+            // 渲染仪表盘
+            renderDashboard(data);
+
+            // 渲染预警
+            renderAlerts(data.warnings);
+
+            // 渲染图表
+            renderCharts(data);
+
+            // 渲染风险列表
+            renderRiskList(data.risk_type_summary);
+
+            // 渲染新闻
+            renderNews(data.analyzed_articles);
+
+            resultsDiv.classList.add('show');
+            resultsDiv.classList.add('fade-in');
+        }
+
+        function renderDashboard(data) {
+            const dashboard = document.getElementById('dashboard');
+            const riskClass = getRiskClass(data.overall_risk_level);
+            const negativeRatio = calculateNegativeRatio(data.sentiment_distribution);
+
+            dashboard.innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-label">Articles Analyzed</div>
+                    <div class="metric-value">${data.total_articles}</div>
+                    <div class="metric-subtitle">${data.risky_articles} flagged as risky</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Risk Score</div>
+                    <div class="metric-value ${riskClass}">${data.average_risk_score}</div>
+                    <div class="metric-subtitle">Out of 100 points</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Risk Level</div>
+                    <div class="metric-value ${riskClass}">${data.overall_risk_level}</div>
+                    <div class="metric-subtitle">AI Classification</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Negative Sentiment</div>
+                    <div class="metric-value" style="color: ${negativeRatio > 40 ? '#ef233c' : '#fee440'}">${negativeRatio}%</div>
+                    <div class="metric-subtitle">Of total coverage</div>
+                </div>
+            `;
+        }
+
+        function renderAlerts(warnings) {
+            const alertsSection = document.getElementById('alerts');
+
+            if (!warnings || warnings.length === 0) {
+                alertsSection.innerHTML = '';
+                return;
+            }
+
+            const levelMap = {
+                '严重': { class: 'critical', label: 'CRITICAL' },
+                '高': { class: 'high', label: 'HIGH' },
+                '中': { class: 'medium', label: 'MEDIUM' },
+                '低': { class: 'medium', label: 'LOW' }
+            };
+
+            alertsSection.innerHTML = `
+                <div class="panel" style="border-left: 4px solid var(--accent-red);">
+                    <div class="panel-header">
+                        <span class="panel-title" style="color: var(--accent-red);">ACTIVE ALERTS // 活跃预警</span>
+                        <span class="panel-badge" style="border-color: var(--accent-red); color: var(--accent-red);">${warnings.length} ALERTS</span>
+                    </div>
+                    ${warnings.map(w => {
+                        const level = levelMap[w.level] || { class: 'medium', label: 'MEDIUM' };
+                        return `
+                            <div class="alert-item ${level.class}">
+                                <div class="alert-icon">⚠</div>
+                                <div class="alert-content">
+                                    <div class="alert-level ${level.class}">${level.label} PRIORITY</div>
+                                    <div class="alert-message">${w.message}</div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        function renderCharts(data) {
+            // 销毁旧图表
+            if (riskRadarChart) riskRadarChart.destroy();
+            if (sentimentChart) sentimentChart.destroy();
+
+            // 雷达图 - 风险分布
+            const riskTypes = data.risk_type_summary || {};
+            const riskLabels = Object.keys(riskTypes);
+            const riskData = riskLabels.map(type => riskTypes[type].count);
+
+            if (riskLabels.length > 0) {
+                const ctx1 = document.getElementById('riskRadarChart').getContext('2d');
+                riskRadarChart = new Chart(ctx1, {
+                    type: 'radar',
+                    data: {
+                        labels: riskLabels,
+                        datasets: [{
+                            label: 'Risk Count',
+                            data: riskData,
+                            backgroundColor: 'rgba(0, 245, 212, 0.2)',
+                            borderColor: '#00f5d4',
+                            pointBackgroundColor: '#ff006e',
+                            pointBorderColor: '#ff006e',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#ff006e'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0, 245, 212, 0.1)'
+                                },
+                                pointLabels: {
+                                    color: '#e0e0e0',
+                                    font: { size: 11 }
+                                },
+                                ticks: {
+                                    color: '#8888a0',
+                                    backdropColor: 'transparent'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false }
+                        }
+                    }
+                });
+            } else {
+                document.getElementById('riskRadarChart').parentElement.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📊</div><p>No risk data available</p></div>';
+            }
+
+            // 饼图 - 情感分布
+            const sentiment = data.sentiment_distribution;
+            const ctx2 = document.getElementById('sentimentChart').getContext('2d');
+            sentimentChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Positive', 'Negative', 'Neutral'],
+                    datasets: [{
+                        data: [sentiment.正面, sentiment.负面, sentiment.中性],
+                        backgroundColor: ['#00c853', '#ef233c', '#8888a0'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderRiskList(riskTypes) {
+            const riskList = document.getElementById('riskList');
+
+            if (!riskTypes || Object.keys(riskTypes).length === 0) {
+                riskList.innerHTML = '<div class="empty-state"><p>No risk categories detected</p></div>';
+                return;
+            }
+
+            const maxCount = Math.max(...Object.values(riskTypes).map(r => r.count));
+
+            riskList.innerHTML = Object.entries(riskTypes).map(([type, data], index) => {
+                const percentage = (data.count / maxCount) * 100;
+                const level = data.count >= 5 ? 'high' : data.count >= 3 ? 'medium' : 'low';
+
+                return `
+                    <div class="risk-item">
+                        <div class="risk-indicator ${level}">${index + 1}</div>
+                        <div class="risk-info">
+                            <div class="risk-name">${type}</div>
+                            <div class="risk-desc">${data.count} incidents detected</div>
+                        </div>
+                        <div style="flex: 1; max-width: 200px;">
+                            <div style="height: 4px; background: rgba(0, 245, 212, 0.2); border-radius: 2px; overflow: hidden;">
+                                <div style="height: 100%; width: ${percentage}%; background: linear-gradient(90deg, #00f5d4, #ff006e); transition: width 0.5s ease;"></div>
+                            </div>
+                        </div>
+                        <div class="risk-count">${data.count}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderNews(articles) {
+            const newsGrid = document.getElementById('newsGrid');
+            document.getElementById('newsCount').textContent = `${articles.length} ARTICLES`;
+
+            if (!articles || articles.length === 0) {
+                newsGrid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📰</div><p>No articles available</p></div>';
+                return;
+            }
+
+            // 只显示有风险的文章和前10条其他文章
+            const riskyArticles = articles.filter(a => a.has_risk);
+            const otherArticles = articles.filter(a => !a.has_risk).slice(0, 10);
+            const displayArticles = [...riskyArticles, ...otherArticles].slice(0, 15);
+
+            newsGrid.innerHTML = displayArticles.map(article => {
+                const sentimentClass = getSentimentClass(article.sentiment.sentiment_label);
+                const sentimentBadge = article.sentiment.sentiment_label.toLowerCase();
+                const cardClass = article.has_risk ? 'risky' : sentimentClass;
+
+                const riskTags = article.risks.map(r => `<span class="risk-tag">${r.risk_type}</span>`).join('');
+                const riskBadge = article.has_risk ? `<span class="badge badge-risk">RISK SCORE: ${article.score.total_score}</span>` : '';
+
+                return `
+                    <div class="news-card ${cardClass}">
+                        <div class="news-header-row">
+                            <div class="news-title">${article.article.title}</div>
+                            <div class="news-badges">
+                                <span class="badge badge-sentiment ${sentimentBadge}">${article.sentiment.sentiment_label}</span>
+                                ${riskBadge}
+                            </div>
+                        </div>
+                        <div class="news-meta">
+                            ${formatDate(article.article.published_at)} // SOURCE: ${article.article.source.toUpperCase()}
+                        </div>
+                        <div class="news-description">${article.article.description || 'No description available'}</div>
+                        ${riskTags ? `<div class="risk-tags">${riskTags}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getRiskClass(level) {
+            switch(level) {
+                case '低风险': return 'risk-low';
+                case '中风险': return 'risk-medium';
+                case '高风险': return 'risk-high';
+                case '严重风险': return 'risk-critical';
+                default: return '';
+            }
+        }
+
+        function getSentimentClass(sentiment) {
+            switch(sentiment) {
+                case '正面': return 'positive';
+                case '负面': return 'negative';
+                case '中性': return 'neutral';
+                default: return 'neutral';
+            }
+        }
+
+        function calculateNegativeRatio(distribution) {
+            const total = distribution.正面 + distribution.负面 + distribution.中性;
+            if (total === 0) return 0;
+            return Math.round((distribution.负面 / total) * 100);
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'UNKNOWN DATE';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit'
+            }).toUpperCase();
+        }
+
+        function showError(message) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `<div class="error-state">ERROR: ${message}</div>`;
+            resultsDiv.classList.add('show');
+        }
+
+        // 页面加载时自动分析
+        window.addEventListener('load', () => {
+            setTimeout(startAnalysis, 500);
+        });
+    </script>
+</body>
+</html>

@@ -3,9 +3,10 @@ app.py - 主程序入口
 Flask Web应用，提供网页界面和API接口
 """
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from news_fetcher import NewsFetcher
 from risk_analyzer import PortfolioRiskAnalyzer
+from history_manager import history_manager
 
 # 创建Flask应用实例
 app = Flask(__name__)
@@ -45,6 +46,10 @@ def analyze():
         analyzer = PortfolioRiskAnalyzer()
         report = analyzer.analyze_portfolio(articles)
 
+        # 第3步：保存到历史记录
+        print("保存到历史记录...")
+        history_manager.add_record("IF椰子水", report)
+
         # 返回分析结果
         return jsonify({
             "success": True,
@@ -56,6 +61,74 @@ def analyze():
         return jsonify({
             "success": False,
             "error": f"分析失败: {str(e)}"
+        }), 500
+
+
+@app.route('/api/history', methods=['GET'])
+def get_history():
+    """
+    获取历史记录列表
+    返回最近5条分析历史
+    """
+    try:
+        limit = request.args.get('limit', 5, type=int)
+        records = history_manager.get_recent_records(limit)
+        return jsonify({
+            "success": True,
+            "data": records,
+            "count": len(records)
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@app.route('/api/history/<record_id>', methods=['GET'])
+def get_history_detail(record_id):
+    """
+    获取单条历史记录详情
+    """
+    try:
+        detail = history_manager.get_record_detail(record_id)
+        if detail:
+            return jsonify({
+                "success": True,
+                "data": detail
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "error": "记录不存在"
+            }), 404
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+
+@app.route('/api/history/save', methods=['POST'])
+def save_history():
+    """
+    保存当前分析结果到历史记录
+    """
+    try:
+        data = request.json
+        keyword = data.get('keyword', 'IF椰子水')
+        analysis_data = data.get('analysis_data', {})
+
+        record_id = history_manager.add_record(keyword, analysis_data)
+        return jsonify({
+            "success": True,
+            "record_id": record_id,
+            "message": "历史记录保存成功"
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
         }), 500
 
 

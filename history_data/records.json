@@ -1,0 +1,82 @@
+[
+  {
+    "id": "20260413_190759",
+    "timestamp": "2026-04-13T19:07:59.252457",
+    "keyword": "IF椰子水",
+    "total_articles": 65,
+    "risky_articles": 11,
+    "risk_score": 65.2,
+    "risk_level": "高风险",
+    "sentiment_distribution": {
+      "正面": 14,
+      "负面": 6,
+      "中性": 45
+    },
+    "summary": "高风险，共发现65条信息，其中11条存在风险，主要风险：供应链风险",
+    "has_details": true
+  },
+  {
+    "id": "20260413_154115",
+    "timestamp": "2026-04-13T15:41:15.097318",
+    "keyword": "IF椰子水",
+    "total_articles": 15,
+    "risky_articles": 3,
+    "risk_score": 73.0,
+    "risk_level": "高风险",
+    "sentiment_distribution": {
+      "正面": 2,
+      "负面": 1,
+      "中性": 12
+    },
+    "summary": "高风险，共发现15条信息，其中3条存在风险，主要风险：供应链风险",
+    "has_details": true
+  },
+  {
+    "id": "20260413_151147",
+    "timestamp": "2026-04-13T15:11:47.000300",
+    "keyword": "IF椰子水",
+    "total_articles": 30,
+    "risky_articles": 1,
+    "risk_score": 54.0,
+    "risk_level": "中风险",
+    "sentiment_distribution": {
+      "正面": 4,
+      "负面": 1,
+      "中性": 25
+    },
+    "summary": "中风险，共分析30条信息",
+    "has_details": true
+  },
+  {
+    "id": "20260413_150228",
+    "timestamp": "2026-04-13T15:02:28.398627",
+    "keyword": "IF椰子水",
+    "total_articles": 50,
+    "risky_articles": 6,
+    "risk_score": 58.5,
+    "risk_level": "中风险",
+    "sentiment_distribution": {
+      "正面": 11,
+      "负面": 3,
+      "中性": 36
+    },
+    "summary": "中风险，共发现50条信息，其中6条存在风险，主要风险：财务风险",
+    "has_details": true
+  },
+  {
+    "id": "20260413_145053",
+    "timestamp": "2026-04-13T14:50:53.347661",
+    "keyword": "IF椰子水",
+    "total_articles": 55,
+    "risky_articles": 8,
+    "risk_score": 64.5,
+    "risk_level": "高风险",
+    "sentiment_distribution": {
+      "正面": 9,
+      "负面": 3,
+      "中性": 43
+    },
+    "summary": "高风险，共发现55条信息，其中8条存在风险，主要风险：供应链风险",
+    "has_details": true
+  }
+]

@@ -1,0 +1,489 @@
+{
+  "total_articles": 15,
+  "risky_articles": 3,
+  "average_risk_score": 73.0,
+  "overall_risk_level": "高风险",
+  "sentiment_distribution": {
+    "正面": 2,
+    "负面": 1,
+    "中性": 12
+  },
+  "risk_type_summary": {
+    "法律风险": {
+      "count": 1,
+      "articles": [
+        "Companies fined after deaths at chicken factory"
+      ]
+    },
+    "供应链风险": {
+      "count": 3,
+      "articles": [
+        "Companies fined after deaths at chicken factory",
+        "Zaatar being recalled in Canada because of Salmonella",
+        "USDA issues public alert on beef and pork with undeclared sesame"
+      ]
+    }
+  },
+  "analyzed_articles": [
+    {
+      "article": {
+        "title": "Colombia reported more than 650 outbreaks in 2025",
+        "description": "In Costa Rica, 20 outbreaks were investigated in 2025",
+        "content": "In Costa Rica, 20 outbreaks were investigated in 2025",
+        "url": "https://www.foodsafetynews.com/2026/04/colombia-reported-more-than-650-outbreaks-in-2025/",
+        "published_at": "2026-04-13T04:05:56+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.861247"
+      },
+      "sentiment": {
+        "polarity": 0.5,
+        "subjectivity": 0.5,
+        "sentiment_label": "正面"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "Drug-resistant Shigella infections on the rise",
+        "description": "A new report from the Centers for Disease Control and Prevention shows that extensively drug resistant Shigella infections are increasing.The research, published in the CDC&apos;s Morbidity and Mortality Weekly Report, covered a sample of Shigella infections from 2011 through 2023. Shigella is transmitted via contaminated food or",
+        "content": "A new report from the Centers for Disease Control and Prevention shows that extensively drug resistant Shigella infections are increasing.The research, published in the CDC&apos;s Morbidity and Mortality Weekly Report, covered a sample of Shigella infections from 2011 through 2023. Shigella is transmitted via contaminated food or",
+        "url": "https://www.foodsafetynews.com/2026/04/drug-resistant-shigella-infections-on-the-rise/",
+        "published_at": "2026-04-13T04:04:56+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.862247"
+      },
+      "sentiment": {
+        "polarity": 0.068,
+        "subjectivity": 0.394,
+        "sentiment_label": "中性"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "FDA warns New York firm for failing to verify safety of imported foods",
+        "description": "As part of its enforcement activities, the Food and Drug Administration sends warning letters to entities under its jurisdiction. Some letters are not posted for public view until weeks or months after they are sent. Business owners have 15 days to respond to FDA warning letters. Warning letters often are",
+        "content": "As part of its enforcement activities, the Food and Drug Administration sends warning letters to entities under its jurisdiction. Some letters are not posted for public view until weeks or months after they are sent. Business owners have 15 days to respond to FDA warning letters. Warning letters often are",
+        "url": "https://www.foodsafetynews.com/2026/04/fda-warns-new-york-firm-for-failing-to-verify-safety-of-imported-foods/",
+        "published_at": "2026-04-13T04:03:20+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.862247"
+      },
+      "sentiment": {
+        "polarity": -0.021,
+        "subjectivity": 0.307,
+        "sentiment_label": "中性"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "Scientists flag travel-related infection risks",
+        "description": "An analysis of travel-related infections in England has found the odds of getting sick are higher when visiting countries outside Europe on all-inclusive packages.Having a better understanding of travel-associated infections could help to improve pre-travel advice and support public health actions, which may lead to a reduction in gastrointestinal",
+        "content": "An analysis of travel-related infections in England has found the odds of getting sick are higher when visiting countries outside Europe on all-inclusive packages.Having a better understanding of travel-associated infections could help to improve pre-travel advice and support public health actions, which may lead to a reduction in gastrointestinal",
+        "url": "https://www.foodsafetynews.com/2026/04/scientists-flag-travel-related-infection-risks/",
+        "published_at": "2026-04-13T04:02:55+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.863248"
+      },
+      "sentiment": {
+        "polarity": 0.007,
+        "subjectivity": 0.395,
+        "sentiment_label": "中性"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "Companies fined after deaths at chicken factory",
+        "description": "Two companies have been fined after two men were killed by faults involving a system used to reduce Campylobacter contamination at a chicken factory in England.Banham Poultry Ltd and Air Products PLC were sentenced at Norwich Crown Court after the deaths of Jonathan Collins, 34, and Neil Moon, 49,",
+        "content": "Two companies have been fined after two men were killed by faults involving a system used to reduce Campylobacter contamination at a chicken factory in England.Banham Poultry Ltd and Air Products PLC were sentenced at Norwich Crown Court after the deaths of Jonathan Collins, 34, and Neil Moon, 49,",
+        "url": "https://www.foodsafetynews.com/2026/04/companies-fined-after-deaths-at-chicken-factory/",
+        "published_at": "2026-04-13T04:01:40+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.864610"
+      },
+      "sentiment": {
+        "polarity": -0.467,
+        "subjectivity": 0.633,
+        "sentiment_label": "负面"
+      },
+      "risks": [
+        {
+          "risk_type": "法律风险",
+          "keywords_found": [
+            "court"
+          ],
+          "evidence": [
+            "... Air Products PLC were sentenced at Norwich Crown Court after the deaths of Jonathan Collins, 34, and Nei..."
+          ],
+          "severity": 1
+        },
+        {
+          "risk_type": "供应链风险",
+          "keywords_found": [
+            "contamination"
+          ],
+          "evidence": [
+            "...s involving a system used to reduce Campylobacter contamination at a chicken factory in England.Banham Poultry Lt..."
+          ],
+          "severity": 1
+        }
+      ],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 14.0,
+        "risk_type_score": 20,
+        "severity_score": 6,
+        "total_score": 90,
+        "risk_level": "严重风险"
+      },
+      "has_risk": true
+    },
+    {
+      "article": {
+        "title": "Sunday Edition: Fowl plague",
+        "description": "We now know that the 1918 influenza pandemic was caused by an H1N1 virus with genes of avian origin.",
+        "content": "We now know that the 1918 influenza pandemic was caused by an H1N1 virus with genes of avian origin.",
+        "url": "https://www.foodsafetynews.com/2026/04/sunday-edition-fowl-plague/",
+        "published_at": "2026-04-12T12:00:31+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.864610"
+      },
+      "sentiment": {
+        "polarity": 0.0,
+        "subjectivity": 0.0,
+        "sentiment_label": "中性"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "Spanish scientists investigate outbreaks affecting children",
+        "description": "Testing indicated high concentrations of biogenic amines",
+        "content": "Testing indicated high concentrations of biogenic amines",
+        "url": "https://www.foodsafetynews.com/2026/04/spanish-scientists-investigate-outbreaks-affecting-children/",
+        "published_at": "2026-04-10T04:05:44+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.865871"
+      },
+      "sentiment": {
+        "polarity": 0.08,
+        "subjectivity": 0.27,
+        "sentiment_label": "中性"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "Oregon State launches online food safety training series",
+        "description": "Oregon State University has launched a new online Quality and Food Safety training series aimed at building practical skills for professionals across the food industry.The program, offered through OSU&#x2019;s Professional and Continuing Education (PACE) unit in partnership with its Department of Food Science and Technology, features short",
+        "content": "Oregon State University has launched a new online Quality and Food Safety training series aimed at building practical skills for professionals across the food industry.The program, offered through OSU&#x2019;s Professional and Continuing Education (PACE) unit in partnership with its Department of Food Science and Technology, features short",
+        "url": "https://www.foodsafetynews.com/2026/04/oregon-state-launches-online-food-safety-training-series/",
+        "published_at": "2026-04-10T04:03:08+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.865871"
+      },
+      "sentiment": {
+        "polarity": 0.079,
+        "subjectivity": 0.285,
+        "sentiment_label": "中性"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "FDA increases import enforcement on certain cheese, seafood, cilantro",
+        "description": "The Food and Drug Administration uses import alerts to enforce U.S. food safety regulations for food from foreign countries. The agency updates and modifies the alerts as needed.Recent modifications to FDA&#x2019;s import alerts, as posted by the agency, are listed below.",
+        "content": "The Food and Drug Administration uses import alerts to enforce U.S. food safety regulations for food from foreign countries. The agency updates and modifies the alerts as needed.Recent modifications to FDA&#x2019;s import alerts, as posted by the agency, are listed below.",
+        "url": "https://www.foodsafetynews.com/2026/04/fda-increases-import-enforcement-on-certain-cheese-seafood-cilantro/",
+        "published_at": "2026-04-10T04:02:24+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.866872"
+      },
+      "sentiment": {
+        "polarity": 0.045,
+        "subjectivity": 0.348,
+        "sentiment_label": "中性"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "Outbreaks fall in Hong Kong in 2025",
+        "description": "Illness after eating oysters continues to be a problem",
+        "content": "Illness after eating oysters continues to be a problem",
+        "url": "https://www.foodsafetynews.com/2026/04/outbreaks-fall-in-hong-kong-in-2025/",
+        "published_at": "2026-04-10T04:01:55+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.866872"
+      },
+      "sentiment": {
+        "polarity": 0.0,
+        "subjectivity": 0.0,
+        "sentiment_label": "中性"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "Zaatar being recalled in Canada because of Salmonella",
+        "description": "Alarjawi brand Royal Zaatar is being recalled in Canada because of contamination with Salmonella.The recalled product was distributed in Alberta, Nova Scotia, Ontario, Quebec and Saskatchewan. As of the posting of the recall by the Canadian Food Inspection Agency there had been no confirmed illnesses related to the product.",
+        "content": "Alarjawi brand Royal Zaatar is being recalled in Canada because of contamination with Salmonella.The recalled product was distributed in Alberta, Nova Scotia, Ontario, Quebec and Saskatchewan. As of the posting of the recall by the Canadian Food Inspection Agency there had been no confirmed illnesses related to the product.",
+        "url": "https://www.foodsafetynews.com/2026/04/zaatar-being-recalled-in-canada-because-of-salmonella/",
+        "published_at": "2026-04-09T23:18:16+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.867871"
+      },
+      "sentiment": {
+        "polarity": -0.1,
+        "subjectivity": 0.7,
+        "sentiment_label": "中性"
+      },
+      "risks": [
+        {
+          "risk_type": "供应链风险",
+          "keywords_found": [
+            "recall",
+            "contamination"
+          ],
+          "evidence": [
+            "...yal Zaatar is being recalled in Canada because of contamination with Salmonella.The recalled product was distribu...",
+            "Zaatar being recalled in Canada because of Salmonella Alarjawi brand ..."
+          ],
+          "severity": 2
+        }
+      ],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 10,
+        "severity_score": 6,
+        "total_score": 66,
+        "risk_level": "高风险"
+      },
+      "has_risk": true
+    },
+    {
+      "article": {
+        "title": "USDA issues public alert on beef and pork with undeclared sesame",
+        "description": "The USDA&#x2019;s Food Safety and Inspection Service (FSIS) has issued a public health alert for raw beef and pork products because of misbranding and an undeclared allergen.&#xa0;The products may contain sesame, a known allergen, which is not declared on the product label.&#xa0;A recall was",
+        "content": "The USDA&#x2019;s Food Safety and Inspection Service (FSIS) has issued a public health alert for raw beef and pork products because of misbranding and an undeclared allergen.&#xa0;The products may contain sesame, a known allergen, which is not declared on the product label.&#xa0;A recall was",
+        "url": "https://www.foodsafetynews.com/2026/04/usda-issues-public-alert-on-beef-and-pork-with-undeclared-sesame/",
+        "published_at": "2026-04-09T23:02:22+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.867871"
+      },
+      "sentiment": {
+        "polarity": -0.077,
+        "subjectivity": 0.198,
+        "sentiment_label": "中性"
+      },
+      "risks": [
+        {
+          "risk_type": "供应链风险",
+          "keywords_found": [
+            "recall"
+          ],
+          "evidence": [
+            "...hich is not declared on the product label.&#xa0;A recall was"
+          ],
+          "severity": 1
+        }
+      ],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 10,
+        "severity_score": 3,
+        "total_score": 63,
+        "risk_level": "高风险"
+      },
+      "has_risk": true
+    },
+    {
+      "article": {
+        "title": "Hungarian inspections find expired food, other problems",
+        "description": "In three processing plants, more than four tons of raw materials and finished products were blocked from sale.",
+        "content": "In three processing plants, more than four tons of raw materials and finished products were blocked from sale.",
+        "url": "https://www.foodsafetynews.com/2026/04/hungarian-inspections-find-expired-food/",
+        "published_at": "2026-04-09T04:05:41+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.868871"
+      },
+      "sentiment": {
+        "polarity": 0.048,
+        "subjectivity": 0.446,
+        "sentiment_label": "中性"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "Salmonella outbreak continues with 68 confirmed patients",
+        "description": "The FDA is continuing to investigate an outbreak of Salmonella Newport infections that has sickened at least 68 people.The outbreak was first reported by the Food and Drug Administration on Feb. 25. At that time the agency reported 38 confirmed patients. The source of the outbreak is not yet",
+        "content": "The FDA is continuing to investigate an outbreak of Salmonella Newport infections that has sickened at least 68 people.The outbreak was first reported by the Food and Drug Administration on Feb. 25. At that time the agency reported 38 confirmed patients. The source of the outbreak is not yet",
+        "url": "https://www.foodsafetynews.com/2026/04/salmonella-outbreak-continues-with-68-confirmed-patients/",
+        "published_at": "2026-04-09T04:04:09+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.868871"
+      },
+      "sentiment": {
+        "polarity": 0.188,
+        "subjectivity": 0.683,
+        "sentiment_label": "正面"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    },
+    {
+      "article": {
+        "title": "STOP Foodborne Illness to spotlight food safety culture at Food Safety Summit",
+        "description": "By STOP Foodborne IllnessAs the industry prepares to gather in Rosemont, Illinois for the 28th annual Food Safety Summit, a longstanding partnership with STOP Foodborne Illness (STOP) will once again take center stage.",
+        "content": "By STOP Foodborne IllnessAs the industry prepares to gather in Rosemont, Illinois for the 28th annual Food Safety Summit, a longstanding partnership with STOP Foodborne Illness (STOP) will once again take center stage.",
+        "url": "https://www.foodsafetynews.com/2026/04/stop-foodborne-illness-to-spotlight-food-safety-culture-at-food-safety-summit/",
+        "published_at": "2026-04-09T04:03:43+00:00",
+        "source": "Food Safety News",
+        "source_type": "RSS-Food Safety News",
+        "fetched_at": "2026-04-13T15:03:43.869871"
+      },
+      "sentiment": {
+        "polarity": -0.1,
+        "subjectivity": 0.1,
+        "sentiment_label": "中性"
+      },
+      "risks": [],
+      "score": {
+        "base_score": 50,
+        "sentiment_score": 0,
+        "risk_type_score": 0,
+        "severity_score": 0,
+        "total_score": 50,
+        "risk_level": "中风险"
+      },
+      "has_risk": false
+    }
+  ],
+  "warnings": [
+    {
+      "level": "高",
+      "message": "存在较高风险，需要密切关注并准备应对预案。"
+    },
+    {
+      "level": "中",
+      "message": "检测到多次供应链风险相关报道（3次），建议专项调查。"
+    }
+  ]
+}
