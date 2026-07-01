@@ -57,6 +57,38 @@ class HistoryManager:
         with open(self.records_file, 'w', encoding='utf-8') as f:
             json.dump(self.records, f, ensure_ascii=False, indent=2)
 
+    def add_alert_record(self, alert: Dict) -> str:
+        """
+        添加预警记录
+
+        Args:
+            alert: 预警信息字典
+
+        Returns:
+            记录ID
+        """
+        record_id = f"alert_{alert.get('id', datetime.now().strftime('%Y%m%d_%H%M%S'))}"
+
+        record = {
+            'id': record_id,
+            'type': 'alert',
+            'timestamp': alert.get('timestamp', datetime.now().isoformat()),
+            'severity': alert.get('severity', '中'),
+            'title': alert.get('title', '未知'),
+            'source': alert.get('source', '未知'),
+            'sentiment_polarity': alert.get('sentiment_polarity', 0),
+            'matched_keywords': alert.get('matched_keywords', []),
+            'summary': f"[{alert.get('severity', '中')}风险预警] {alert.get('title', '未知')[:50]}..."
+        }
+
+        # 添加到记录列表
+        self.records.insert(0, record)
+        if len(self.records) > 50:
+            self.records.pop()
+
+        self._save_records()
+        return record_id
+
     def add_record(self, keyword: str, analysis_data: Dict) -> str:
         """
         添加新的历史记录
@@ -210,10 +242,10 @@ if __name__ == "__main__":
     }
 
     record_id = history_manager.add_record("IF椰子水", test_data)
-    print(f"添加记录成功: {record_id}")
+    print(f"Record added: {record_id}")
 
-    # 查询最近记录
+    # Query recent records
     recent = history_manager.get_recent_records(5)
-    print(f"\n最近 {len(recent)} 条记录:")
+    print(f"\nRecent {len(recent)} records:")
     for r in recent:
         print(f"  - {r['timestamp']}: {r['summary']}")

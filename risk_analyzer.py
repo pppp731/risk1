@@ -3,9 +3,10 @@ risk_analyzer.py - 风险分析模块
 核心功能：情感分析 + 风险识别 + 风险评分
 """
 
-from textblob import TextBlob
-from config import RISK_KEYWORDS, RISK_THRESHOLDS
+from baidu_nlp import SentimentAnalyzer
+from config import RISK_KEYWORDS, RISK_THRESHOLDS, BAIDU_API_KEY, BAIDU_SECRET_KEY
 import re
+from datetime import datetime, timedelta
 
 
 class RiskAnalyzer:
@@ -14,10 +15,16 @@ class RiskAnalyzer:
     def __init__(self):
         """初始化分析器"""
         self.risk_keywords = RISK_KEYWORDS
+        # 初始化智能情感分析器（自动识别中英文）
+        self.sentiment_analyzer = SentimentAnalyzer(
+            baidu_api_key=BAIDU_API_KEY if BAIDU_API_KEY != "your_baidu_api_key_here" else None,
+            baidu_secret_key=BAIDU_SECRET_KEY if BAIDU_SECRET_KEY != "your_baidu_secret_key_here" else None
+        )
 
     def analyze_sentiment(self, text):
         """
         情感分析 - 判断文本是正面还是负面
+        自动检测语言，中文使用百度NLP，英文使用TextBlob
 
         参数:
             text: 要分析的文本
@@ -26,37 +33,22 @@ class RiskAnalyzer:
             dict: 包含极性(polarity)和主观性(subjectivity)的字典
                 - polarity: -1(负面) 到 1(正面)
                 - subjectivity: 0(客观) 到 1(主观)
+                - sentiment_label: 正面/负面/中性
+                - confidence: 置信度
+                - source: 分析来源 (baidu_nlp/textblob)
         """
         if not text:
-            return {"polarity": 0, "subjectivity": 0}
+            return {
+                "polarity": 0,
+                "subjectivity": 0,
+                "sentiment_label": "中性",
+                "confidence": 0,
+                "source": "none"
+            }
 
-        # 使用TextBlob进行情感分析
-        blob = TextBlob(text)
-        polarity = blob.sentiment.polarity
-        subjectivity = blob.sentiment.subjectivity
-
-        return {
-            "polarity": round(polarity, 3),
-            "subjectivity": round(subjectivity, 3),
-            "sentiment_label": self._get_sentiment_label(polarity)
-        }
-
-    def _get_sentiment_label(self, polarity):
-        """
-        根据极性值返回情感标签
-
-        参数:
-            polarity: 极性值 (-1 到 1)
-
-        返回:
-            str: 正面/负面/中性
-        """
-        if polarity > 0.1:
-            return "正面"
-        elif polarity < -0.1:
-            return "负面"
-        else:
-            return "中性"
+        # 使用智能情感分析器
+        result = self.sentiment_analyzer.analyze(text)
+        return result
 
     def identify_risks(self, text):
         """
@@ -229,12 +221,22 @@ class RiskAnalyzer:
         # 3. 风险评分
         score = self.calculate_risk_score(sentiment, risks)
 
+        # 计算风险概率和风险矩阵等级
+        probability = calculate_probability(article)
+        # 将总分(0-100)归一化为影响程度(0-1)
+        impact = score["total_score"] / 100.0
+        risk_level = risk_matrix(impact, probability)
+        risk_score = impact * probability  # 风险综合得分
+
         return {
             "article": article,
             "sentiment": sentiment,
             "risks": risks,
             "score": score,
-            "has_risk": len(risks) > 0 or sentiment.get("polarity", 0) < -0.1
+            "has_risk": len(risks) > 0 or sentiment.get("polarity", 0) < -0.1,
+            "probability": round(probability, 3),
+            "risk_level": risk_level,
+            "risk_score": round(risk_score, 3)
         }
 
 
@@ -371,3 +373,126 @@ class PortfolioRiskAnalyzer:
             return "低风险"
         else:
             return "无风险"
+
+
+def calculate_probability(article):
+    """
+    计算单条新闻的风险发生概率
+
+    评估维度:
+    - 新闻来源权威性: Reuters/Bloomberg +0.2, 主流商业媒体 +0.1, 其他 +0.05
+    - 关键词强度: 高风险词(recall/诉讼/调查等) +0.3, 中风险词(质疑/下降等) +0.15
+    - 新闻时效性: 3天内 +0.1, 一周内 +0.05, 超过一周 0
+    - 基础概率 0.3, 上限 0.95
+
+    参数:
+        article: 新闻字典，包含source, title, description, published_at等字段
+
+    返回:
+        float: 风险发生概率 (0-1)
+    """
+    base_probability = 0.3
+    source_weight = 0.0
+    keyword_weight = 0.0
+    timeliness_weight = 0.0
+
+    # 1. 评估新闻来源权威性
+    source = article.get("source", "").lower()
+    high_credibility = ["reuters", "bloomberg", "financial times", "ft.com",
+                        "wall street journal", "wsj", "cnbc", "marketwatch",
+                        "路透社", "彭博", "华尔街日报", "金融时报"]
+    medium_credibility = ["seeking alpha", "business insider", "forbes",
+                          "yahoo finance", "google news", "food dive",
+                          "supply chain dive", "grocery dive", "bevnet",
+                          "财新", "第一财经", "21世纪经济报道"]
+
+    if any(s in source for s in high_credibility):
+        source_weight = 0.2
+    elif any(s in source for s in medium_credibility):
+        source_weight = 0.1
+    else:
+        source_weight = 0.05
+
+    # 2. 评估关键词强度
+    full_text = f"{article.get('title', '')} {article.get('description', '')}".lower()
+
+    # 高风险关键词 - 直接表明风险事件已发生
+    high_risk_keywords = [
+        "recall", "lawsuit", "litigation", "investigation", "strike",
+        "bankruptcy", "fraud", "scandal", "contamination", "violation",
+        "召回", "诉讼", "调查", "罢工", "破产", "欺诈", "丑闻",
+        "污染", "违规", "停产", "关闭", "下架"
+    ]
+
+    # 中风险关键词 - 潜在风险信号
+    medium_risk_keywords = [
+        "question", "doubt", "decline", "drop", "fall", "concern",
+        "risk", "warning", "challenge", "pressure", "dispute",
+        "质疑", "下降", "下跌", "下滑", "担忧", "关注", "风险",
+        "警告", "挑战", "压力", "纠纷", "紧张", "不确定"
+    ]
+
+    has_high_risk = any(kw in full_text for kw in high_risk_keywords)
+    has_medium_risk = any(kw in full_text for kw in medium_risk_keywords)
+
+    if has_high_risk:
+        keyword_weight = 0.3
+    elif has_medium_risk:
+        keyword_weight = 0.15
+
+    # 3. 评估新闻时效性
+    published_at = article.get("published_at") or article.get("publishedAt") or article.get("date")
+    if published_at:
+        try:
+            if isinstance(published_at, str):
+                # 尝试解析多种日期格式
+                for fmt in ["%Y-%m-%d", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S",
+                           "%a, %d %b %Y %H:%M:%S %Z", "%Y-%m-%dT%H:%M:%SZ"]:
+                    try:
+                        pub_date = datetime.strptime(published_at[:19], fmt[:19])
+                        break
+                    except ValueError:
+                        continue
+                else:
+                    pub_date = None
+            else:
+                pub_date = published_at
+
+            if pub_date:
+                days_ago = (datetime.now() - pub_date).days
+                if days_ago <= 3:
+                    timeliness_weight = 0.1
+                elif days_ago <= 7:
+                    timeliness_weight = 0.05
+        except (ValueError, TypeError):
+            pass
+
+    # 计算总概率
+    probability = base_probability + source_weight + keyword_weight + timeliness_weight
+    return min(probability, 0.95)
+
+
+def risk_matrix(impact, probability):
+    """
+    风险矩阵评估 - 根据影响程度和概率确定风险等级
+
+    评估标准:
+    - 高风险: impact > 0.5 且 probability > 0.6
+    - 中风险: (impact > 0.3 且 probability > 0.4) 或 (impact * probability > 0.2)
+    - 低风险: 其余情况
+
+    参数:
+        impact: 影响程度 (0-1)，可从风险评分归一化得到
+        probability: 发生概率 (0-1)
+
+    返回:
+        str: 风险等级 ("高"/"中"/"低")
+    """
+    risk_score = impact * probability
+
+    if impact > 0.5 and probability > 0.6:
+        return "高"
+    elif (impact > 0.3 and probability > 0.4) or risk_score > 0.2:
+        return "中"
+    else:
+        return "低"

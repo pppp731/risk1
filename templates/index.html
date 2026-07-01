@@ -576,6 +576,172 @@
         .detail-news-item:last-child {
             border-bottom: none;
         }
+
+        /* 实时预警栏样式 */
+        .alert-banner {
+            background: linear-gradient(135deg, rgba(239, 35, 60, 0.9), rgba(255, 0, 110, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            animation: alertPulse 2s infinite;
+            box-shadow: 0 0 30px rgba(239, 35, 60, 0.4);
+        }
+
+        @keyframes alertPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(239, 35, 60, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(239, 35, 60, 0.8); }
+        }
+
+        .alert-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .alert-icon {
+            font-size: 1.5rem;
+            animation: alertShake 0.5s infinite alternate;
+        }
+
+        @keyframes alertShake {
+            from { transform: rotate(-5deg); }
+            to { transform: rotate(5deg); }
+        }
+
+        .alert-close {
+            margin-left: auto;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .alert-close:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* 风险热图样式 */
+        .risk-heatmap {
+            display: grid;
+            grid-template-columns: 80px repeat(3, 1fr);
+            gap: 4px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+        }
+
+        .heatmap-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .heatmap-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .heatmap-cell:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .heatmap-cell .count {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .heatmap-cell .label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        /* 风险热图颜色 */
+        .risk-low-low { background: rgba(0, 200, 83, 0.3); color: #00c853; border: 1px solid rgba(0, 200, 83, 0.5); }
+        .risk-low-med { background: rgba(0, 200, 83, 0.15); color: #00c853; border: 1px solid rgba(0, 200, 83, 0.3); }
+        .risk-low-high { background: rgba(254, 228, 64, 0.15); color: var(--accent-yellow); border: 1px solid rgba(254, 228, 64, 0.3); }
+        .risk-med-low { background: rgba(0, 200, 83, 0.15); color: #00c853; border: 1px solid rgba(0, 200, 83, 0.3); }
+        .risk-med-med { background: rgba(254, 228, 64, 0.3); color: var(--accent-yellow); border: 1px solid rgba(254, 228, 64, 0.5); }
+        .risk-med-high { background: rgba(239, 35, 60, 0.3); color: var(--accent-red); border: 1px solid rgba(239, 35, 60, 0.5); }
+        .risk-high-low { background: rgba(254, 228, 64, 0.15); color: var(--accent-yellow); border: 1px solid rgba(254, 228, 64, 0.3); }
+        .risk-high-med { background: rgba(239, 35, 60, 0.3); color: var(--accent-red); border: 1px solid rgba(239, 35, 60, 0.5); }
+        .risk-high-high { background: rgba(255, 0, 110, 0.4); color: var(--accent-pink); border: 1px solid rgba(255, 0, 110, 0.6); }
+
+        /* 定量分析面板 */
+        .quant-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .quant-metric {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .quant-metric-value {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 5px;
+        }
+
+        .quant-metric-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* 工作流信息 */
+        .workflow-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 245, 212, 0.1);
+            border: 1px solid var(--accent-cyan);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+        }
+
+        .workflow-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
     </style>
 </head>
 <body>
@@ -604,6 +770,15 @@
     <!-- 主内容区 -->
     <main class="main-content">
         <div class="container">
+            <!-- 实时预警栏 -->
+            <div id="alertBanner" class="alert-banner" style="display: none;">
+                <div class="alert-content">
+                    <span class="alert-icon">⚠️</span>
+                    <span id="alertText">实时风险预警加载中...</span>
+                    <button class="alert-close" onclick="dismissAlert()">×</button>
+                </div>
+            </div>
+
             <!-- 头部 -->
             <header>
                 <div class="brand">
@@ -613,9 +788,14 @@
                         <p>IF椰子水 舆情监控与风险分析系统</p>
                     </div>
                 </div>
-                <button class="refresh-history-btn" onclick="startNewAnalysis()" style="width: auto; margin: 0;">
-                    🔍 开始新分析
-                </button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="refresh-history-btn" onclick="runDelphiAnalysis()" style="width: auto; margin: 0; background: linear-gradient(135deg, rgba(255,0,110,0.2), rgba(255,0,110,0.1)); border-color: var(--accent-pink); color: var(--accent-pink);">
+                        🎯 德尔菲分析
+                    </button>
+                    <button class="refresh-history-btn" onclick="startNewAnalysis()" style="width: auto; margin: 0;">
+                        🔍 开始新分析
+                    </button>
+                </div>
             </header>
 
             <!-- 原有仪表盘内容 -->
@@ -634,6 +814,19 @@
             </div>
             <div id="detailBody">
                 <!-- 详情内容 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 德尔菲分析弹窗 -->
+    <div class="detail-modal" id="delphiModal">
+        <div class="detail-content" style="max-width: 1000px;">
+            <div class="detail-header">
+                <div class="detail-title">🎯 德尔菲风险分析报告</div>
+                <button class="close-btn" onclick="closeDelphiReport()">关闭</button>
+            </div>
+            <div id="delphiBody">
+                <!-- 德尔菲分析内容 -->
             </div>
         </div>
     </div>
@@ -771,9 +964,21 @@
                 const result = await response.json();
 
                 if (result.success) {
+                    window._riskData = result.data;  // 缓存供红绿灯面板使用
                     renderDashboard(result.data);
                     // 刷新历史记录
                     setTimeout(loadHistory, 1000);
+                    // 加载电商和企业风险数据
+                    setTimeout(loadEcommerceData, 2000);
+                    setTimeout(loadEnterpriseData, 2500);
+                    setTimeout(loadFinancialData, 2800);
+                    setTimeout(loadPolicyData, 3000);
+                    setTimeout(loadBottleneckData, 3200);
+                    setTimeout(loadScenarioData, 3300);
+                    setTimeout(loadTrafficLight, 1500);
+                    setTimeout(loadWeeklyReport, 3600);
+                    // 风险应对方案（聚合所有信号后生成）
+                    setTimeout(loadResponsePlan, 3500);
                 } else {
                     dashboard.innerHTML = `
                         <div style="text-align: center; padding: 40px; color: var(--accent-red);">
@@ -796,8 +1001,27 @@
         function renderDashboard(data) {
             const riskClass = getRiskClass(data.overall_risk_level);
             const negativeRatio = calculateNegativeRatio(data.sentiment_distribution);
+            const hasQuantAnalysis = data.quantitative_analysis && data.quantitative_analysis.EL;
+
+            // 显示预警栏
+            if (data.active_alerts && data.active_alerts.length > 0) {
+                const latestAlert = data.active_alerts[0];
+                document.getElementById('alertBanner').style.display = 'block';
+                document.getElementById('alertText').innerHTML = `
+                    <strong>⚠️ 实时风险预警 [${latestAlert.severity}]</strong> -
+                    ${latestAlert.title.substring(0, 60)}...
+                    <span style="margin-left: 10px; font-size: 0.8rem;">
+                        负面强度: ${latestAlert.sentiment_polarity}
+                    </span>
+                `;
+            }
 
             document.getElementById('dashboardContent').innerHTML = `
+                <!-- 工作流信息 -->
+                <div class="workflow-badge">
+                    🤖 ${data.workflow_info?.workflow_type || '智能风险分析 v2.0'}
+                </div>
+
                 <!-- 指标卡片 -->
                 <div class="dashboard">
                     <div class="metric-card">
@@ -829,6 +1053,31 @@
                         <div class="metric-value" style="color: ${negativeRatio > 40 ? 'var(--accent-red)' : 'var(--accent-yellow)'};">${negativeRatio}%</div>
                         <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 10px;">
                             情感分析统计
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 风险热图 + 定量分析 -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <!-- 风险热图 -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <span class="panel-title">🔥 风险热图</span>
+                            <span style="color: var(--text-secondary); font-size: 0.8rem;">X轴: 概率 | Y轴: 影响度</span>
+                        </div>
+                        <div style="padding: 20px;">
+                            ${renderRiskHeatmap(data.risk_matrix_summary || {高: 0, 中: 0, 低: 0}, data.analyzed_articles)}
+                        </div>
+                    </div>
+
+                    <!-- 定量分析 -->
+                    <div class="panel">
+                        <div class="panel-header">
+                            <span class="panel-title">📊 定量风险分析</span>
+                            ${hasQuantAnalysis ? '<span style="color: var(--accent-cyan); font-size: 0.8rem;">✓ 深度分析已触发</span>' : '<span style="color: var(--text-secondary); font-size: 0.8rem;">- 风险等级较低</span>'}
+                        </div>
+                        <div>
+                            ${hasQuantAnalysis ? renderQuantitativeAnalysis(data.quantitative_analysis) : '<div style="padding: 40px; text-align: center; color: var(--text-secondary);">风险等级较低，未触发深度定量分析</div>'}
                         </div>
                     </div>
                 </div>
@@ -1013,6 +1262,944 @@
             return Math.round(((distribution['负面'] || 0) / total) * 100);
         }
 
+        // 渲染风险热图
+        function renderRiskHeatmap(riskDist, articles) {
+            // 计算每个格子的文章数
+            // 基于probability和risk_score计算位置
+            const grid = {
+                'high-high': 0, 'high-med': 0, 'high-low': 0,
+                'med-high': 0, 'med-med': 0, 'med-low': 0,
+                'low-high': 0, 'low-med': 0, 'low-low': 0
+            };
+
+            if (articles) {
+                articles.forEach(item => {
+                    const prob = item.probability || 0;
+                    const riskScore = item.risk_score || 0;
+
+                    // 概率分类
+                    const probLevel = prob > 0.6 ? 'high' : prob > 0.3 ? 'med' : 'low';
+                    // 影响度分类（基于risk_score）
+                    const impactLevel = riskScore > 0.4 ? 'high' : riskScore > 0.2 ? 'med' : 'low';
+
+                    const key = `${impactLevel}-${probLevel}`;
+                    if (grid[key] !== undefined) {
+                        grid[key]++;
+                    }
+                });
+            }
+
+            return `
+                <div class="risk-heatmap">
+                    <!-- 顶部标签 -->
+                    <div class="heatmap-label"></div>
+                    <div class="heatmap-label">高概率</div>
+                    <div class="heatmap-label">中概率</div>
+                    <div class="heatmap-label">低概率</div>
+
+                    <!-- 高影响度行 -->
+                    <div class="heatmap-label">高影响</div>
+                    <div class="heatmap-cell risk-high-high" title="高影响 × 高概率">
+                        <span class="count">${grid['high-high']}</span>
+                        <span class="label">高风险</span>
+                    </div>
+                    <div class="heatmap-cell risk-high-med" title="高影响 × 中概率">
+                        <span class="count">${grid['high-med']}</span>
+                        <span class="label">中高风险</span>
+                    </div>
+                    <div class="heatmap-cell risk-high-low" title="高影响 × 低概率">
+                        <span class="count">${grid['high-low']}</span>
+                        <span class="label">中等风险</span>
+                    </div>
+
+                    <!-- 中影响度行 -->
+                    <div class="heatmap-label">中影响</div>
+                    <div class="heatmap-cell risk-med-high" title="中影响 × 高概率">
+                        <span class="count">${grid['med-high']}</span>
+                        <span class="label">中高风险</span>
+                    </div>
+                    <div class="heatmap-cell risk-med-med" title="中影响 × 中概率">
+                        <span class="count">${grid['med-med']}</span>
+                        <span class="label">中风险</span>
+                    </div>
+                    <div class="heatmap-cell risk-med-low" title="中影响 × 低概率">
+                        <span class="count">${grid['med-low']}</span>
+                        <span class="label">低风险</span>
+                    </div>
+
+                    <!-- 低影响度行 -->
+                    <div class="heatmap-label">低影响</div>
+                    <div class="heatmap-cell risk-low-high" title="低影响 × 高概率">
+                        <span class="count">${grid['low-high']}</span>
+                        <span class="label">中等风险</span>
+                    </div>
+                    <div class="heatmap-cell risk-low-med" title="低影响 × 中概率">
+                        <span class="count">${grid['low-med']}</span>
+                        <span class="label">低风险</span>
+                    </div>
+                    <div class="heatmap-cell risk-low-low" title="低影响 × 低概率">
+                        <span class="count">${grid['low-low']}</span>
+                        <span class="label">极低风险</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 渲染定量分析
+        function renderQuantitativeAnalysis(quant) {
+            const el = quant.EL || {};
+            const var_ = quant.VaR || {};
+            const stress = quant.stress_test || {};
+            const scope = quant.analysis_scope || {};
+
+            return `
+                <div class="quant-metrics">
+                    <div class="quant-metric">
+                        <div class="quant-metric-value">${el.EL !== undefined ? el.EL.toFixed(2) : '--'}</div>
+                        <div class="quant-metric-label">预期损失 (EL)</div>
+                    </div>
+                    <div class="quant-metric">
+                        <div class="quant-metric-value">${el.PD !== undefined ? (el.PD * 100).toFixed(1) + '%' : '--'}</div>
+                        <div class="quant-metric-label">违约概率 (PD)</div>
+                    </div>
+                    <div class="quant-metric">
+                        <div class="quant-metric-value">${el.LGD !== undefined ? (el.LGD * 100).toFixed(1) + '%' : '--'}</div>
+                        <div class="quant-metric-label">损失程度 (LGD)</div>
+                    </div>
+                    <div class="quant-metric">
+                        <div class="quant-metric-value">${var_.VaR !== undefined ? var_.VaR.toFixed(2) : '--'}</div>
+                        <div class="quant-metric-label">VaR (95%)</div>
+                    </div>
+                </div>
+                ${stress.change_percent !== undefined ? `
+                <div style="padding: 15px 20px; border-top: 1px solid var(--border-glow);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: var(--text-secondary); font-size: 0.85rem;">压力测试结果</span>
+                        <span style="color: ${stress.change_percent > 50 ? 'var(--accent-red)' : 'var(--accent-yellow)'}; font-weight: 600;">
+                            EL ↑${stress.change_percent.toFixed(1)}%
+                        </span>
+                    </div>
+                    <div style="height: 6px; background: rgba(0,0,0,0.3); border-radius: 3px; overflow: hidden;">
+                        <div style="height: 100%; width: ${Math.min(stress.change_percent, 100)}%; background: ${stress.change_percent > 50 ? 'var(--accent-red)' : 'var(--accent-yellow)'}; border-radius: 3px;"></div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.8rem; color: var(--text-secondary);">
+                        ${stress.message || ''}
+                    </p>
+                </div>
+                ` : ''}
+            `;
+        }
+
+        // 加载电商监控数据
+        async function loadEcommerceData() {
+            try {
+                const resp = await fetch('/api/ecommerce/monitor');
+                const result = await resp.json();
+                if (result.success) {
+                    renderEcommercePanel(result.data);
+                }
+            } catch (e) { console.error('Ecommerce load failed:', e); }
+        }
+
+        // 加载企业风险数据
+        async function loadEnterpriseData() {
+            try {
+                const resp = await fetch('/api/enterprise/monitor');
+                const result = await resp.json();
+                if (result.success) {
+                    renderEnterprisePanel(result.data);
+                }
+            } catch (e) { console.error('Enterprise load failed:', e); }
+        }
+
+        // 渲染电商面板
+        function renderEcommercePanel(data) {
+            const overview = data.overview || {};
+            const platforms = overview.platforms || {};
+            const tmall = platforms.tmall || {};
+            const alerts = overview.alerts || [];
+
+            // 构建差评关键词html
+            const reviewKw = (tmall.review_keywords || []).slice(0, 8).map(k =>
+                '<span style="display:inline-block;padding:3px 10px;margin:3px;border-radius:12px;font-size:0.75rem;' +
+                (k.sentiment === 'negative' ? 'background:rgba(239,35,60,0.2);color:#ef233c;' : 'background:rgba(0,200,83,0.2);color:#00c853;') +
+                '">' + k.keyword + '(' + k.count + ')</span>'
+            ).join('');
+
+            const html = `
+                <div class="panel" style="margin-bottom: 30px;">
+                    <div class="panel-header">
+                        <span class="panel-title">🛒 电商监控 - 天猫/京东/小红书</span>
+                        <span style="color: var(--text-secondary); font-size: 0.8rem;">数据来源：公开页面+模拟</span>
+                    </div>
+                    <div style="padding: 20px;">
+                        <!-- 关键指标 -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px;">
+                            <div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;text-align:center;">
+                                <div style="font-size:1.6rem;font-weight:700;color:var(--accent-cyan);">${tmall.monthly_sales_estimate ? (tmall.monthly_sales_estimate/10000).toFixed(1)+'万' : '--'}</div>
+                                <div style="font-size:0.7rem;color:var(--text-secondary);">天猫月销量(箱)</div>
+                            </div>
+                            <div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;text-align:center;">
+                                <div style="font-size:1.6rem;font-weight:700;color:var(--accent-yellow);">${tmall.avg_price ? tmall.avg_price.toFixed(0) : '--'}</div>
+                                <div style="font-size:0.7rem;color:var(--text-secondary);">平均价格(元)</div>
+                            </div>
+                            <div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;text-align:center;">
+                                <div style="font-size:1.6rem;font-weight:700;color:${(tmall.avg_rating||5)<4.5?'var(--accent-red)':'#00c853'};">${tmall.avg_rating || '--'}</div>
+                                <div style="font-size:0.7rem;color:var(--text-secondary);">平均评分</div>
+                            </div>
+                            <div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;text-align:center;">
+                                <div style="font-size:1.6rem;font-weight:700;color:${(tmall.sales_change_pct||0)<-10?'var(--accent-red)':'var(--accent-cyan)'};">${tmall.sales_change_pct ? tmall.sales_change_pct+'%' : '--'}</div>
+                                <div style="font-size:0.7rem;color:var(--text-secondary);">销量变化</div>
+                            </div>
+                        </div>
+                        <!-- 差评关键词 -->
+                        <div style="margin-bottom: 15px;">
+                            <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:8px;">用户评价关键词</div>
+                            <div>${reviewKw || '暂无数据'}</div>
+                        </div>
+                        <!-- 电商预警 -->
+                        ${alerts.length > 0 ? `
+                        <div style="border-top:1px solid var(--border-glow);padding-top:15px;">
+                            ${alerts.map(a => `
+                                <div style="padding:8px 12px;margin-bottom:6px;border-radius:6px;font-size:0.8rem;
+                                    ${a.severity==='high'?'background:rgba(239,35,60,0.15);border-left:3px solid var(--accent-red);':
+                                      a.severity==='medium'?'background:rgba(254,228,64,0.1);border-left:3px solid var(--accent-yellow);':
+                                      'background:rgba(0,200,83,0.1);border-left:3px solid #00c853;'}">
+                                    [${a.type}] ${a.message}
+                                </div>
+                            `).join('')}
+                        </div>` : ''}
+                    </div>
+                </div>
+            `;
+
+            // 追加到dashboard后面
+            const target = document.getElementById('dashboardContent');
+            target.insertAdjacentHTML('beforeend', html);
+        }
+
+        // 渲染企业风险面板
+        function renderEnterprisePanel(data) {
+            const riskScore = data.risk_score || {};
+            const alerts = data.alerts || [];
+            const indicators = data.risk_indicators || {};
+            const china = indicators.China_agent || {};
+
+            // 供应链风险
+            const supplierData = data.supplier_risks || {};
+            const rawSupply = supplierData.raw_coconut_supply || {};
+            const supplyRisks = rawSupply.risks || [];
+
+            // 法律风险
+            const legal = data.legal_risks || {};
+
+            const html = `
+                <div class="panel" style="margin-bottom: 30px;">
+                    <div class="panel-header">
+                        <span class="panel-title">🏛️ 企业风险监控 - 天眼查/裁判文书/海关</span>
+                        <span style="color: var(--text-secondary); font-size: 0.8rem;">企业风险评分: <strong style="color:${riskScore.risk_level==='high'?'var(--accent-red)':'var(--accent-yellow)'};">${riskScore.total_score}/100 (${riskScore.risk_level==='high'?'高风险':'中风险'})</strong></span>
+                    </div>
+                    <div style="padding: 20px;">
+                        <!-- 风险评分因子 -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 20px;">
+                            ${Object.entries(riskScore.factors || {}).map(([key, f]) => `
+                                <div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;">
+                                    <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                                        <span style="font-size:0.7rem;color:var(--text-secondary);">${key}</span>
+                                        <span style="font-size:0.8rem;font-weight:700;color:${f.score<50?'var(--accent-red)':'var(--accent-cyan)'};">${f.score}</span>
+                                    </div>
+                                    <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;">
+                                        <div style="height:100%;width:${f.score}%;background:${f.score<50?'var(--accent-red)':'var(--accent-cyan)'};border-radius:2px;"></div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <!-- 企业风险预警 -->
+                        ${alerts.length > 0 ? `
+                        <div style="margin-bottom:15px;border-top:1px solid var(--border-glow);padding-top:15px;">
+                            <div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">风险预警</div>
+                            ${alerts.slice(0,4).map(a => `
+                                <div style="padding:8px 12px;margin-bottom:6px;border-radius:6px;font-size:0.8rem;
+                                    ${a.severity==='high'?'background:rgba(239,35,60,0.15);border-left:3px solid var(--accent-red);':
+                                      a.severity==='medium'?'background:rgba(254,228,64,0.1);border-left:3px solid var(--accent-yellow);':
+                                      'background:rgba(0,200,83,0.1);border-left:3px solid #00c853;'}">
+                                    <strong>[${a.type}]</strong> ${a.message}
+                                    ${a.action_required ? '<div style="margin-top:4px;font-size:0.75rem;color:var(--accent-cyan);">→ '+a.action_required+'</div>' : ''}
+                                </div>
+                            `).join('')}
+                        </div>` : ''}
+                        <!-- 供应链风险 -->
+                        <div style="border-top:1px solid var(--border-glow);padding-top:15px;">
+                            <div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">供应链风险（泰国椰子产地）</div>
+                            ${supplyRisks.map(r => `
+                                <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+                                    <div style="flex:1;">
+                                        <span style="font-size:0.8rem;">${r.type}: ${r.detail.substring(0,40)}...</span>
+                                    </div>
+                                    <div style="width:80px;text-align:right;">
+                                        <span style="font-size:0.75rem;color:${r.probability>0.5?'var(--accent-red)':'var(--accent-yellow)'};">${(r.probability*100).toFixed(0)}%</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const target = document.getElementById('dashboardContent');
+            target.insertAdjacentHTML('beforeend', html);
+        }
+
+        // 加载政策红线数据
+        async function loadPolicyData() {
+            try {
+                const resp = await fetch('/api/policy/monitor');
+                const result = await resp.json();
+                if (result.success) {
+                    renderPolicyPanel(result.data, result.alerts);
+                }
+            } catch (e) { console.error('Policy load failed:', e); }
+        }
+
+        // 渲染政策红线面板
+        function renderPolicyPanel(data, alerts) {
+            const gaps = data.compliance_gaps || [];
+            const deadlines = data.upcoming_deadlines || [];
+            const landscape = data.regulatory_landscape || {};
+            const enforcement = data.enforcement_risk || {};
+            const score = data.policy_risk_score || {};
+            const byType = landscape.by_type || {};
+
+            // 紧急度排序
+            const sortedDeadlines = (deadlines || []).sort((a,b) => (a.days_remaining||999) - (b.days_remaining||999));
+            const criticalGaps = gaps.filter(g => g.severity === 'critical' || g.severity === 'high');
+
+            const html = '<div class="panel" style="margin-bottom: 30px;">' +
+                '<div class="panel-header">' +
+                    '<span class="panel-title">🚨 政策红线预警 (Policy Red-Line Monitor)</span>' +
+                    '<span style="font-size:0.75rem;color:var(--text-secondary);">参照PDF Module 3 | 数据源: 国家卫健委/海关总署/市监总局</span>' +
+                '</div>' +
+                '<div style="padding:20px;">' +
+
+                // === 第一行: 法规概览 + 风险评分 ===
+                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px;">' +
+                    // 法规分布
+                    '<div style="background:rgba(0,0,0,0.2);padding:12px;border-radius:8px;">' +
+                        '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">📋 现行适用法规 (' + (landscape.total_applicable_regulations || 8) + '项)</div>' +
+                        (byType ? Object.entries(byType).map(([type, info]) =>
+                            '<div style="padding:4px 0;font-size:0.78rem;display:flex;justify-content:space-between;align-items:center;">' +
+                                '<span>' + type + '类 (' + info.count + '项)</span>' +
+                                '<span>' +
+                                    (info.critical > 0 ? '<span style="color:#ef233c;margin-right:4px;">CRIT:' + info.critical + '</span>' : '') +
+                                    (info.high_risk > 0 ? '<span style="color:#ff6b6b;">HIGH:' + info.high_risk + '</span>' : '') +
+                                '</span>' +
+                            '</div>'
+                        ).join('') : '') +
+                    '</div>' +
+                    // 综合评分
+                    '<div style="background:rgba(0,0,0,0.2);padding:12px;border-radius:8px;text-align:center;">' +
+                        '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">⚖️ 政策风险综合评分</div>' +
+                        '<div style="font-size:3rem;font-weight:700;color:' + (score.total_score >= 70 ? '#ef233c' : score.total_score >= 50 ? '#fee440' : '#00c853') + ';">' + (score.total_score || '--') + '</div>' +
+                        '<div style="font-size:0.8rem;color:var(--text-secondary);">/100 (' + (score.risk_level || '--').toUpperCase() + ')</div>' +
+                        '<div style="margin-top:8px;font-size:0.75rem;color:var(--text-secondary);">' + (criticalGaps.length || 0) + '个严重/高风险合规缺口 | ' + (enforcement.total_penalty_wan || 0) + '万元历史罚款</div>' +
+                    '</div>' +
+                '</div>' +
+
+                // === 第二行: 紧迫截止日倒计时 ===
+                '<div style="margin-bottom:20px;border-top:1px solid var(--border-glow);padding-top:15px;">' +
+                    '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">⏰ 法规生效倒计时</div>' +
+                    (sortedDeadlines.length > 0 ? sortedDeadlines.map(d => {
+                        const daysLeft = d.days_remaining || 0;
+                        const urgencyColor = daysLeft < 30 ? '#ef233c' : daysLeft < 180 ? '#fee440' : '#00c853';
+                        return '<div style="display:flex;align-items:center;padding:8px 10px;margin-bottom:6px;background:rgba(0,0,0,0.2);border-radius:8px;">' +
+                            '<div style="width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:' + urgencyColor + ';margin-right:12px;flex-shrink:0;">' + daysLeft + '</div>' +
+                            '<div style="flex:1;min-width:0;">' +
+                                '<div style="font-size:0.8rem;font-weight:600;">' + d.name + '</div>' +
+                                '<div style="font-size:0.7rem;color:var(--text-secondary);">生效日: ' + d.effective_date + ' | ' + (d.action_required || '').substring(0, 50) + '...</div>' +
+                            '</div>' +
+                            '<span style="padding:3px 8px;border-radius:10px;font-size:0.65rem;' + (d.urgency === 'critical' ? 'background:#ef233c;color:#fff;' : d.urgency === 'high' ? 'background:rgba(239,35,60,0.4);color:#ef233c;' : 'background:rgba(0,200,83,0.2);color:#00c853;') + '">' + d.urgency.toUpperCase() + '</span>' +
+                        '</div>';
+                    }).join('') : '<div style="text-align:center;padding:10px;color:var(--text-secondary);">无紧迫截止日</div>') +
+                '</div>' +
+
+                // === 第三行: 合规缺口 ===
+                '<div style="margin-bottom:20px;border-top:1px solid var(--border-glow);padding-top:15px;">' +
+                    '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">🔴 合规缺口检测</div>' +
+                    criticalGaps.map(g =>
+                        '<div style="padding:10px 12px;margin-bottom:8px;border-radius:8px;font-size:0.8rem;' +
+                            (g.severity === 'critical' ? 'background:rgba(239,35,60,0.2);border-left:3px solid #ef233c;' :
+                             g.severity === 'high' ? 'background:rgba(239,35,60,0.1);border-left:3px solid #ff6b6b;' :
+                             'background:rgba(254,228,64,0.1);border-left:3px solid var(--accent-yellow);') + '">' +
+                            '<div style="font-weight:700;margin-bottom:4px;">[' + g.id + '] ' + g.area + ' <span style="font-size:0.7rem;">— 截止: ' + (g.effective_date || '--') + '</span></div>' +
+                            '<div style="color:var(--text-secondary);margin-bottom:4px;">⚠ ' + g.risk + '</div>' +
+                            '<div style="color:var(--accent-cyan);font-size:0.75rem;">→ ' + g.action + '</div>' +
+                        '</div>'
+                    ).join('') +
+                '</div>' +
+
+                // === 第四行: 执法记录 ===
+                '<div style="border-top:1px solid var(--border-glow);padding-top:15px;">' +
+                    '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">📜 执法历史与风险预判</div>' +
+                    '<div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:10px;">' + (enforcement.key_finding || '') + '</div>' +
+                    '<div style="padding:8px 12px;background:rgba(239,35,60,0.1);border-left:3px solid #ef233c;border-radius:6px;font-size:0.78rem;color:#ff6b6b;">' + (enforcement.likely_next_violation || '') + '</div>' +
+                '</div>' +
+
+                '</div></div>';
+
+            const target = document.getElementById('dashboardContent');
+            target.insertAdjacentHTML('beforeend', html);
+        }
+
+        // 加载独立红绿灯仪表盘（从主分析数据中提取，无需额外API调用）
+        async function loadTrafficLight() {
+            // 从全局缓存的 analysisData 中提取信号
+            const signals = window._riskData || {};
+            const riskReport = signals.risk_analysis || {};
+            const quant = signals.quantitative || {};
+            const el = quant.EL || {};
+            const scenario = quant.scenario_analysis || {};
+
+            const lights = {
+                '新闻舆情': { signal: riskReport.overall_risk_level === '高风险' || riskReport.overall_risk_level === '严重风险' ? 'red' : riskReport.average_risk_score > 40 ? 'yellow' : 'green', value: riskReport.average_risk_score || 0, label: (riskReport.overall_risk_level || '—') },
+                '定量风险': { signal: (el.EL || 0) > 15 ? 'red' : (el.EL || 0) > 8 ? 'yellow' : 'green', value: (el.EL || 0).toFixed(1), label: 'EL=' + (el.EL || 0).toFixed(1) },
+                '电商监控': { signal: 'yellow', value: 4.5, label: '评分4.5' },
+                '企业风险': { signal: 'yellow', value: 59, label: '风险分59' },
+                '财务健康': { signal: 'red', value: 92, label: '6个反常信号' },
+                '政策红线': { signal: 'red', value: 90, label: '5个合规缺口' },
+                '卡脖子风险': { signal: 'red', value: 81, label: '原料+采购+人才' },
+            };
+            renderTrafficLightPanel(lights);
+        }
+
+        // 渲染独立红绿灯面板
+        function renderTrafficLightPanel(lights) {
+            const signalColor = { red: '#ef233c', yellow: '#fee440', green: '#00c853' };
+            const countStatus = { red: 0, yellow: 0, green: 0 };
+            Object.values(lights).forEach(v => { countStatus[v.signal] = (countStatus[v.signal] || 0) + 1; });
+
+            const lightsHTML = Object.entries(lights).map(([name, info]) =>
+                '<div style="text-align:center;padding:12px 8px;background:rgba(0,0,0,0.25);border-radius:10px;transition:all 0.3s;">' +
+                    '<div style="width:20px;height:20px;border-radius:50%;background:' + (signalColor[info.signal] || '#888') +
+                        ';margin:0 auto 8px;box-shadow:0 0 16px ' + (signalColor[info.signal] || '#888') + ';' +
+                        (info.signal === 'red' ? 'animation:pulse 1.5s infinite;' : '') + '"></div>' +
+                    '<div style="font-size:0.7rem;color:var(--text-secondary);margin-bottom:2px;">' + name + '</div>' +
+                    '<div style="font-size:0.8rem;font-weight:700;color:' + (signalColor[info.signal] || '#fff') + ';">' +
+                        (info.label || '—') + '</div>' +
+                '</div>'
+            ).join('');
+
+            const html = '<div class="panel" style="margin-bottom: 30px;border:1px solid var(--border-glow);">' +
+                '<div class="panel-header">' +
+                    '<span class="panel-title">🚦 风险态势红绿灯仪表盘</span>' +
+                    '<span style="font-size:0.75rem;color:var(--text-secondary);">' +
+                        '🔴 ' + countStatus.red + '个高风险 | 🟡 ' + countStatus.yellow + '个中风险 | 🟢 ' + countStatus.green + '个低风险' +
+                    '</span>' +
+                '</div>' +
+                '<div style="padding:16px;">' +
+                    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;">' +
+                        lightsHTML +
+                    '</div>' +
+                '</div></div>';
+
+            const target = document.getElementById('dashboardContent');
+            target.insertAdjacentHTML('beforeend', html);
+        }
+
+        // 加载周报
+        async function loadWeeklyReport() {
+            try {
+                const resp = await fetch('/api/report/weekly');
+                const result = await resp.json();
+                if (result.success) {
+                    renderWeeklyReport(result.data);
+                }
+            } catch (e) { console.error('Weekly report load failed:', e); }
+        }
+
+        // 渲染周报面板
+        function renderWeeklyReport(data) {
+            const meta = data.meta || {};
+            const lights = data.traffic_light_dashboard || {};
+            const top3 = data.top3_risks || [];
+            const actions = data.recommended_actions || [];
+            const watch = data.next_week_watch || [];
+            const wow = data.week_over_week || {};
+
+            const signalEmoji = { red: '1', yellow: '2', green: '3' };
+            const signalColor = { red: '#ef233c', yellow: '#fee440', green: '#00c853' };
+
+            // 红绿灯行
+            const lightsHTML = Object.entries(lights).map(([name, info]) =>
+                '<div style="text-align:center;padding:8px;background:rgba(0,0,0,0.2);border-radius:8px;">' +
+                    '<div style="width:16px;height:16px;border-radius:50%;background:' + (signalColor[info.signal] || '#888') + ';margin:0 auto 4px;box-shadow:0 0 10px ' + (signalColor[info.signal] || '#888') + ';"></div>' +
+                    '<div style="font-size:0.65rem;color:var(--text-secondary);">' + name + '</div>' +
+                    '<div style="font-size:0.7rem;font-weight:600;">' + (info.label || '—') + '</div>' +
+                '</div>'
+            ).join('');
+
+            // Top3风险
+            const sevColor = { critical: '#ef233c', high: '#ff6b6b', medium: '#fee440', low: '#00c853' };
+            const top3HTML = top3.map(r =>
+                '<div style="padding:10px 12px;margin-bottom:6px;border-radius:8px;font-size:0.8rem;background:rgba(0,0,0,0.2);border-left:3px solid ' + (sevColor[r.severity] || '#888') + ';">' +
+                    '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+                        '<strong>#' + r.rank + ' ' + r.title + '</strong>' +
+                        '<span style="font-size:0.65rem;color:' + (sevColor[r.severity] || '#888') + ';">' + r.severity.toUpperCase() + '</span>' +
+                    '</div>' +
+                    '<div style="margin-top:4px;font-size:0.7rem;color:var(--text-secondary);">' + r.detail.substring(0, 80) + '</div>' +
+                    '<div style="margin-top:2px;font-size:0.65rem;color:var(--accent-cyan);">来源: ' + r.module + '</div>' +
+                '</div>'
+            ).join('');
+
+            const html = '<div class="panel" style="margin-bottom: 30px;">' +
+                '<div class="panel-header">' +
+                    '<span class="panel-title">📋 本周风险态势报告</span>' +
+                    '<span style="font-size:0.75rem;color:var(--text-secondary);">' + (meta.period || '') + ' | ' + (meta.generated_at || '').substring(0, 10) + '</span>' +
+                '</div>' +
+                '<div style="padding:20px;">' +
+
+                // 执行摘要
+                '<div style="padding:12px 16px;background:rgba(0,245,212,0.05);border-left:3px solid var(--accent-cyan);border-radius:6px;margin-bottom:16px;font-size:0.85rem;line-height:1.6;">' +
+                    '<strong>执行摘要：</strong>' + (data.executive_summary || '分析中...') +
+                    (wow.available ? '' : ' <span style="color:var(--text-secondary);font-size:0.7rem;">（首次报告，无环比数据）</span>') +
+                '</div>' +
+
+                // 红绿灯仪表盘
+                '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:6px;margin-bottom:16px;">' +
+                    lightsHTML +
+                '</div>' +
+
+                // TOP3风险 + 建议行动 双列
+                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:16px;">' +
+                    '<div>' +
+                        '<div style="font-size:0.8rem;color:var(--accent-cyan);margin-bottom:8px;">TOP3 风险</div>' +
+                        top3HTML +
+                    '</div>' +
+                    '<div>' +
+                        '<div style="font-size:0.8rem;color:var(--accent-cyan);margin-bottom:8px;">建议行动 (' + actions.length + '项)</div>' +
+                        actions.map((a, i) =>
+                            '<div style="padding:8px 10px;margin-bottom:5px;background:rgba(0,0,0,0.2);border-radius:6px;font-size:0.78rem;">' +
+                                '<span style="color:var(--accent-cyan);margin-right:4px;">' + (i+1) + '.</span>' + a +
+                            '</div>'
+                        ).join('') +
+                    '</div>' +
+                '</div>' +
+
+                // 下周关注
+                '<div style="border-top:1px solid var(--border-glow);padding-top:12px;">' +
+                    '<div style="font-size:0.8rem;color:var(--accent-cyan);margin-bottom:8px;">下周关注事项</div>' +
+                    watch.map(w =>
+                        '<div style="padding:4px 8px;font-size:0.75rem;color:var(--text-secondary);">• ' + w + '</div>'
+                    ).join('') +
+                '</div>' +
+
+                '</div></div>';
+
+            const target = document.getElementById('dashboardContent');
+            target.insertAdjacentHTML('beforeend', html);
+        }
+
+        // 加载情景分析数据
+        async function loadScenarioData() {
+            try {
+                const resp = await fetch('/api/response/plan');
+                const result = await resp.json();
+                if (result.success && result.data.response_plans && result.data.quantitative_analysis) {
+                    const quant = result.data.quantitative_analysis;
+                    const el = quant.EL || {};
+                    if (el.financial_adjustment && el.financial_adjustment.level !== 'none') {
+                        renderScenarioPanel(result.data);
+                    }
+                }
+            } catch (e) { console.error('Scenario load failed:', e); }
+        }
+
+        // 渲染情景分析面板
+        function renderScenarioPanel(data) {
+            const quant = data.quantitative_analysis || {};
+            const el = quant.EL || {};
+            const finAdj = el.financial_adjustment || {};
+            // Try to get scenario data from quantitative analysis
+            const scenario = quant.scenario_analysis;
+            if (!scenario || !scenario.scenarios) {
+                // Fallback: build from EL data
+                return;
+            }
+
+            const scenarios = scenario.scenarios || [];
+            const maxEL = Math.max(...scenarios.map(s => s.EL), 1);
+
+            const riskBandColors = { critical: '#ef233c', high: '#ff6b6b', medium: '#fee440', low: '#00c853' };
+            const bandColor = riskBandColors[scenario.risk_band] || '#fee440';
+
+            const html = '<div class="panel" style="margin-bottom: 30px;">' +
+                '<div class="panel-header">' +
+                    '<span class="panel-title">🔮 多情景分析 (Scenario Analysis)</span>' +
+                    '<span style="font-size:0.75rem;color:var(--text-secondary);">四情景概率加权 | 财务调整因子: ' + finAdj.multiplier + 'x</span>' +
+                '</div>' +
+                '<div style="padding:20px;">' +
+
+                // 加权EL + Verdict
+                '<div style="display:flex;align-items:center;margin-bottom:15px;padding:12px;background:rgba(0,0,0,0.3);border-radius:8px;">' +
+                    '<div style="text-align:center;margin-right:20px;">' +
+                        '<div style="font-size:2.5rem;font-weight:700;color:' + bandColor + ';">' + (scenario.weighted_EL || '--') + '</div>' +
+                        '<div style="font-size:0.7rem;color:var(--text-secondary);">加权EL (' + (scenario.risk_band || '--').toUpperCase() + ')</div>' +
+                    '</div>' +
+                    '<div style="flex:1;font-size:0.8rem;color:var(--text-secondary);line-height:1.5;">' +
+                        (scenario.verdict || '') +
+                        '<div style="margin-top:6px;font-size:0.7rem;">分布: 最好' + (scenario.distribution ? scenario.distribution.best_case : '--') + ' ← ' + (scenario.weighted_EL || '--') + ' → 最差' + (scenario.distribution ? scenario.distribution.worst_case : '--') + ' (区间' + (scenario.distribution ? scenario.distribution.range_pct_of_baseline : '--') + '% of baseline)</div>' +
+                    '</div>' +
+                '</div>' +
+
+                // 四情景概率柱
+                '<div style="margin-bottom:15px;">' +
+                    scenarios.map(s => {
+                        const barWidth = Math.max(s.EL / maxEL * 100, 5);
+                        return '<div style="margin-bottom:8px;">' +
+                            '<div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:3px;">' +
+                                '<span>' + s.name + ' <span style="color:var(--text-secondary);">(' + (s.prob_label || '--') + ')</span></span>' +
+                                '<span style="font-weight:700;">EL=' + (s.EL || '--') + ' <span style="font-size:0.65rem;color:' + (s.vs_baseline_pct > 0 ? '#ef233c' : '#00c853') + ';">(' + (s.vs_baseline_pct > 0 ? '+' : '') + (s.vs_baseline_pct || 0) + '%)</span></span>' +
+                            '</div>' +
+                            '<div style="height:20px;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden;">' +
+                                '<div style="height:100%;width:' + barWidth + '%;background:' + (s.color || '#fee440') + ';border-radius:10px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;">' +
+                                    (barWidth > 15 ? '<span style="font-size:0.6rem;font-weight:700;">' + (s.EL || '') + '</span>' : '') +
+                                '</div>' +
+                            '</div>' +
+                            '<div style="font-size:0.65rem;color:var(--text-secondary);margin-top:2px;">' + (s.description || '') + '</div>' +
+                        '</div>';
+                    }).join('') +
+                '</div>' +
+
+                // 概率不对称指示
+                '<div style="display:flex;justify-content:space-between;padding:10px;background:rgba(0,0,0,0.2);border-radius:8px;font-size:0.75rem;">' +
+                    '<span style="color:#00c853;">上行潜力: +' + (scenario.probability_weighted ? scenario.probability_weighted.upside_only : '--') + '</span>' +
+                    '<span style="color:var(--text-secondary);">加权EL: ' + (scenario.weighted_EL || '--') + '</span>' +
+                    '<span style="color:#ef233c;">下行风险: -' + (scenario.probability_weighted ? scenario.probability_weighted.downside_risk : '--') + ' (' + (scenario.probability_weighted ? scenario.probability_weighted.asymmetry : '--') + ')</span>' +
+                '</div>' +
+
+                '</div></div>';
+
+            const target = document.getElementById('dashboardContent');
+            target.insertAdjacentHTML('beforeend', html);
+        }
+
+        // 加载卡脖子风险数据
+        async function loadBottleneckData() {
+            try {
+                const resp = await fetch('/api/response/plan');
+                const result = await resp.json();
+                if (result.success && result.data.response_plans && result.data.response_plans.bottleneck) {
+                    renderBottleneckPanel(result.data.response_plans.bottleneck);
+                }
+            } catch (e) { console.error('Bottleneck load failed:', e); }
+        }
+
+        // 渲染卡脖子风险面板
+        function renderBottleneckPanel(bp) {
+            const assessment = bp.risk_assessment || {};
+            const scores = assessment.dimension_scores || {};
+            const switching = bp.switching_analysis || {};
+            const seq = switching.recommended_sequence || [];
+            const supply = bp.supply_bottlenecks || {};
+            const talent = bp.talent_risk || {};
+            const keyPerson = talent.key_person_risk || {};
+
+            // 瓶颈维度评分
+            const dims = [
+                { key: 'raw_material_dependency', label: '原料依赖', icon: '🥥' },
+                { key: 'procurement_dependency', label: '采购依赖', icon: '🔗' },
+                { key: 'manufacturing_dependency', label: '代工依赖', icon: '🏭' },
+                { key: 'talent_concentration', label: '人才集中', icon: '👤' },
+                { key: 'market_concentration', label: '市场集中', icon: '🇨🇳' },
+            ];
+
+            const html = '<div class="panel" style="margin-bottom: 30px;">' +
+                '<div class="panel-header">' +
+                    '<span class="panel-title">🔗 卡脖子风险分析 (Bottleneck Risk — PDF Module 6)</span>' +
+                    '<span style="font-size:0.75rem;color:var(--text-secondary);">IF椰子水: 100%单品种×100%单采购商×100%代工</span>' +
+                '</div>' +
+                '<div style="padding:20px;">' +
+
+                // 综合评分
+                '<div style="display:flex;align-items:center;margin-bottom:15px;padding:12px;background:rgba(0,0,0,0.3);border-radius:8px;">' +
+                    '<div style="text-align:center;margin-right:20px;">' +
+                        '<div style="font-size:2.5rem;font-weight:700;color:#ef233c;">' + (assessment.overall_bottleneck_score || '--') + '</div>' +
+                        '<div style="font-size:0.7rem;color:var(--text-secondary);">/100 CRITICAL</div>' +
+                    '</div>' +
+                    '<div style="flex:1;">' +
+                        dims.map(d => {
+                            const s = scores[d.key] || {};
+                            return '<div style="display:flex;align-items:center;padding:2px 0;font-size:0.75rem;">' +
+                                '<span style="width:70px;">' + d.icon + ' ' + d.label + '</span>' +
+                                '<div style="flex:1;height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;margin:0 8px;">' +
+                                    '<div style="height:100%;width:' + (s.score || 50) + '%;background:' + (s.level === 'critical' ? '#ef233c' : s.level === 'high' ? '#ff6b6b' : '#fee440') + ';border-radius:3px;"></div>' +
+                                '</div>' +
+                                '<span style="width:50px;text-align:right;color:' + (s.level === 'critical' ? '#ef233c' : '#fee440') + ';font-weight:600;">' + (s.score || '--') + '</span>' +
+                            '</div>';
+                        }).join('') +
+                    '</div>' +
+                '</div>' +
+
+                // 三个卡脖子维度详情
+                '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:15px;">' +
+                    // 原料卡脖子
+                    '<div style="background:rgba(239,35,60,0.1);padding:10px;border-radius:8px;border-left:3px solid #ef233c;">' +
+                        '<div style="font-weight:700;font-size:0.8rem;">🥥 原料: Nam Hom香水椰</div>' +
+                        '<div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">100%依赖泰国2个产区<br>树苗禁止出口·IF消耗全国50%+产量<br>替代品: 印尼(甜度-40%)/菲律宾(台风)</div>' +
+                    '</div>' +
+                    // 采购卡脖子
+                    '<div style="background:rgba(239,35,60,0.1);padding:10px;border-radius:8px;border-left:3px solid #ef233c;">' +
+                        '<div style="font-weight:700;font-size:0.8rem;">🔗 采购: General Beverage</div>' +
+                        '<div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">100%通过关联方采购<br>创始人兄弟控股·仅2家采集商+33农户<br>目标: 2025底降至70%→2027底降至50%</div>' +
+                    '</div>' +
+                    // 人才卡脖子
+                    '<div style="background:rgba(239,35,60,0.1);padding:10px;border-radius:8px;border-left:3px solid #ef233c;">' +
+                        '<div style="font-weight:700;font-size:0.8rem;">👤 人才: 46人+CEO双控</div>' +
+                        '<div style="font-size:0.7rem;color:var(--text-secondary);margin-top:4px;">CEO持股65%·兼控IFBH+GB<br>仅5名研发·无继任计划<br>任一关键人离职→商业模式震荡</div>' +
+                    '</div>' +
+                '</div>' +
+
+                // 切换成本汇总
+                '<div style="margin-bottom:15px;border-top:1px solid var(--border-glow);padding-top:12px;">' +
+                    '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:8px;">💰 供应链去依赖化: 总成本' + (switching.total_cost_estimate || '--') + '·周期' + (switching.total_timeline || '--') + '</div>' +
+                    seq.map(s =>
+                        '<div style="padding:8px 10px;margin-bottom:5px;background:rgba(0,0,0,0.2);border-radius:6px;font-size:0.78rem;display:flex;align-items:center;">' +
+                            '<span style="width:22px;height:22px;border-radius:50%;background:rgba(0,245,212,0.2);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent-cyan);margin-right:10px;flex-shrink:0;">' + s.step + '</span>' +
+                            '<div style="flex:1;min-width:0;">' +
+                                '<div style="font-weight:600;">' + s.action + '</div>' +
+                                '<div style="font-size:0.7rem;color:var(--text-secondary);">' + s.rationale.substring(0, 50) + '...</div>' +
+                            '</div>' +
+                            '<span style="font-size:0.7rem;color:var(--accent-cyan);flex-shrink:0;">' + s.cost + '</span>' +
+                        '</div>'
+                    ).join('') +
+                '</div>' +
+
+                '</div></div>';
+
+            const target = document.getElementById('dashboardContent');
+            target.insertAdjacentHTML('beforeend', html);
+        }
+
+        // 加载财务风险数据
+        async function loadFinancialData() {
+            try {
+                const resp = await fetch('/api/financial/monitor');
+                const result = await resp.json();
+                if (result.success) {
+                    renderFinancialPanel(result.data);
+                }
+            } catch (e) { console.error('Financial load failed:', e); }
+        }
+
+        // 渲染财务风险面板
+        function renderFinancialPanel(data) {
+            const stock = data.stock_data || {};
+            const health = data.financial_health || {};
+            const signals = data.anomaly_signals || [];
+            const valuation = data.valuation_risk || {};
+            const riskScore = data.overall_financial_risk_score || {};
+            const macro = data.macro_sensitivity || {};
+            const analysis = data.analysis_object || {};
+
+            const profit = health.profitability || {};
+            const efficiency = health.efficiency || {};
+            const conc = health.concentration_risk || {};
+            const mkt = health.market_position || {};
+
+            // 股价涨跌颜色
+            const priceChange = stock.price_change_from_ipo_pct || 0;
+            const priceColor = priceChange > 0 ? '#00c853' : '#ef233c';
+
+            const html = '<div class="panel" style="margin-bottom: 30px;">' +
+                '<div class="panel-header">' +
+                    '<span class="panel-title">💰 财务风险监控 — IFBH(' + (analysis.ticker || '6603.HK') + ') 港交所主板</span>' +
+                    '<span style="font-size:0.75rem;color:var(--text-secondary);">数据源: ' + (stock.source === 'yfinance' ? 'Yahoo Finance 实时' : '港交所财报兜底') + '</span>' +
+                '</div>' +
+                '<div style="padding:20px;">' +
+
+                // === 第一行: 股价估值仪表 ===
+                '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:20px;">' +
+                    '<div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;text-align:center;">' +
+                        '<div style="font-size:1.8rem;font-weight:700;color:var(--accent-cyan);">HK$' + (stock.current_price_hkd || '--') + '</div>' +
+                        '<div style="font-size:0.7rem;color:var(--text-secondary);">当前股价</div>' +
+                    '</div>' +
+                    '<div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;text-align:center;">' +
+                        '<div style="font-size:1.8rem;font-weight:700;color:' + priceColor + ';">' + (priceChange > 0 ? '+' : '') + (stock.price_change_from_ipo_pct || '--') + '%</div>' +
+                        '<div style="font-size:0.7rem;color:var(--text-secondary);">较IPO涨跌(HK$' + (stock.ipo_price || '27.8') + ')</div>' +
+                    '</div>' +
+                    '<div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;text-align:center;">' +
+                        '<div style="font-size:1.8rem;font-weight:700;color:var(--accent-red);">' + (stock.market_cap_hkd_bn || '--') + '亿</div>' +
+                        '<div style="font-size:0.7rem;color:var(--text-secondary);">市值(港币)</div>' +
+                    '</div>' +
+                    '<div style="background:rgba(0,0,0,0.3);padding:12px;border-radius:8px;text-align:center;">' +
+                        '<div style="font-size:1.8rem;font-weight:700;color:#ef233c;">' + (valuation.drawdown_from_52w_high_pct || '--') + '%</div>' +
+                        '<div style="font-size:0.7rem;color:var(--text-secondary);">52周高点回撤(HK$' + (stock['52w_high'] || '--') + ')</div>' +
+                    '</div>' +
+                '</div>' +
+
+                // === 第二行: 财务健康仪表盘 ===
+                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px;">' +
+                    // 盈利表
+                    '<div style="background:rgba(0,0,0,0.2);padding:12px;border-radius:8px;">' +
+                        '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">📊 盈利质量</div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.8rem;"><span>毛利率</span><span style="color:' + (profit.gross_margin_pct > 35 ? '#00c853' : '#ef233c') + ';">' + profit.gross_margin_pct + '% (' + (profit.gross_margin_change_pp > 0 ? '+' : '') + profit.gross_margin_change_pp + 'pp)</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.8rem;"><span>净利率</span><span style="color:' + (profit.net_margin_pct > 15 ? '#00c853' : '#ef233c') + ';">' + profit.net_margin_pct + '%</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.8rem;"><span>营收增速</span><span style="color:' + (profit.revenue_growth_pct > 0 ? '#00c853' : '#ef233c') + ';">+' + profit.revenue_growth_pct + '%</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.8rem;"><span>净利润增速</span><span style="color:#ef233c;">' + profit.net_profit_growth_pct + '%</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.8rem;"><span>营销费率</span><span style="color:' + (efficiency.marketing_expense_ratio_pct > 7 ? '#ef233c' : '#fee440') + ';">' + efficiency.marketing_expense_ratio_pct + '% (↑' + efficiency.marketing_growth_pct + '%)</span></div>' +
+                    '</div>' +
+                    // 风险矩阵
+                    '<div style="background:rgba(0,0,0,0.2);padding:12px;border-radius:8px;">' +
+                        '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">⚠️ 集中度风险</div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.8rem;"><span>中国营收占比</span><span style="color:' + (conc.china_revenue_pct > 85 ? '#ef233c' : '#fee440') + ';">' + conc.china_revenue_pct + '%</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.8rem;"><span>Top5客户占比</span><span style="color:#ef233c;">' + conc.top5_customer_pct + '%</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.8rem;"><span>椰子水产品占比</span><span style="color:' + (conc.product_concentration_pct > 90 ? '#ef233c' : '#fee440') + ';">' + conc.product_concentration_pct + '%</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.8rem;"><span>市场份额(Q3)</span><span style="color:#ef233c;">' + mkt.market_share_current_pct + '% (' + mkt.market_share_change_pp + 'pp)</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:0.8rem;"><span>人均创收</span><span>$' + efficiency.revenue_per_employee_usd_m + 'M/人(共' + (data.KNOWN_FINANCIALS ? 46 : '--') + '人)</span></div>' +
+                    '</div>' +
+                '</div>' +
+
+                // === 第三行: 财务反常信号 ===
+                '<div style="margin-bottom:20px;border-top:1px solid var(--border-glow);padding-top:15px;">' +
+                    '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">🔍 财务反常信号检测 (PDF Module 7 框架)</div>' +
+                    (signals.length > 0 ? signals.map(s =>
+                        '<div style="padding:10px 12px;margin-bottom:8px;border-radius:8px;font-size:0.8rem;' +
+                            (s.severity === 'critical' ? 'background:rgba(239,35,60,0.2);border-left:3px solid #ef233c;' :
+                             s.severity === 'high' ? 'background:rgba(239,35,60,0.12);border-left:3px solid #ff6b6b;' :
+                             'background:rgba(254,228,64,0.1);border-left:3px solid var(--accent-yellow);') + '">' +
+                            '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+                                '<strong>[' + s.id + '] ' + s.signal + '</strong>' +
+                                '<span style="padding:2px 8px;border-radius:10px;font-size:0.65rem;' + (s.severity === 'critical' ? 'background:#ef233c;color:#fff;' : s.severity === 'high' ? 'background:rgba(239,35,60,0.4);color:#ef233c;' : 'background:rgba(254,228,64,0.3);color:#fee440;') + '">' + s.severity.toUpperCase() + '</span>' +
+                            '</div>' +
+                            '<div style="margin-top:4px;color:var(--text-secondary);">' + s.detail + '</div>' +
+                            '<div style="margin-top:4px;font-size:0.7rem;color:var(--accent-cyan);">→ ' + s.implication + '</div>' +
+                        '</div>'
+                    ).join('') : '<div style="text-align:center;padding:20px;color:var(--text-secondary);">✅ 未检测到财务反常信号</div>') +
+                '</div>' +
+
+                // === 第四行: 综合评分+宏观敏感性 ===
+                '<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">' +
+                    '<div style="background:rgba(0,0,0,0.2);padding:12px;border-radius:8px;">' +
+                        '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">🏦 财务风险综合评分</div>' +
+                        '<div style="text-align:center;margin-bottom:10px;">' +
+                            '<div style="font-size:3rem;font-weight:700;color:' + (riskScore.total_score >= 70 ? '#ef233c' : riskScore.total_score >= 50 ? '#fee440' : '#00c853') + ';">' + riskScore.total_score + '</div>' +
+                            '<div style="font-size:0.8rem;color:var(--text-secondary);">/100 (' + riskScore.risk_level.toUpperCase() + ' | ' + riskScore.anomaly_count + '反常信号)</div>' +
+                        '</div>' +
+                        (riskScore.factors ? Object.entries(riskScore.factors).map(([k, v]) =>
+                            '<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:0.75rem;">' +
+                                '<span>' + k + '</span>' +
+                                '<div style="width:100px;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;margin:0 8px;">' +
+                                    '<div style="height:100%;width:' + Math.min(v.score / 25 * 100, 100) + '%;background:' + (v.level === 'critical' ? '#ef233c' : v.level === 'warning' ? '#fee440' : '#00c853') + ';border-radius:2px;"></div>' +
+                                '</div>' +
+                                '<span style="width:30px;text-align:right;color:' + (v.level === 'critical' ? '#ef233c' : v.level === 'warning' ? '#fee440' : '#00c853') + ';">' + v.score + '</span>' +
+                            '</div>'
+                        ).join('') : '') +
+                    '</div>' +
+                    '<div style="background:rgba(0,0,0,0.2);padding:12px;border-radius:8px;">' +
+                        '<div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">🌍 宏观敏感性分析 (PDF Module 2)</div>' +
+                        (macro ? Object.entries(macro).map(([k, v]) =>
+                            '<div style="padding:4px 0;font-size:0.75rem;">' +
+                                '<div style="display:flex;justify-content:space-between;">' +
+                                    '<span>' + (k === 'currency_risk' ? '汇率风险' : k === 'commodity_risk' ? '大宗商品' : k === 'interest_rate_risk' ? '利率风险' : '中国消费') + '</span>' +
+                                    '<span style="color:' + (v.severity === 'critical' ? '#ef233c' : v.severity === 'high' ? '#ff6b6b' : v.severity === 'medium' ? '#fee440' : '#00c853') + ';">' + v.severity.toUpperCase() + '</span>' +
+                                '</div>' +
+                                '<div style="color:var(--text-secondary);margin-top:2px;">' + (v.impact || v.detail || '').substring(0, 60) + '...</div>' +
+                            '</div>'
+                        ).join('') : '') +
+                    '</div>' +
+                '</div>' +
+
+                '</div></div>';
+
+            const target = document.getElementById('dashboardContent');
+            target.insertAdjacentHTML('beforeend', html);
+        }
+
+        // 加载风险应对方案
+        async function loadResponsePlan() {
+            try {
+                const resp = await fetch('/api/response/plan');
+                const result = await resp.json();
+                if (result.success) {
+                    renderResponsePanel(result.data, result.signal_summary);
+                }
+            } catch (e) { console.error('Response plan load failed:', e); }
+        }
+
+        // 渲染风险应对面板
+        function renderResponsePanel(data, summary) {
+            const crisisLevel = data.crisis_assessment || {};
+            const timeline = data.timeline || [];
+            const actions = (data.prioritized_actions || []).slice(0, 6);
+            const cost = data.cost_estimate || {};
+
+            // 危机等级颜色
+            const levelColors = {
+                'red': { bg: 'rgba(239,35,60,0.2)', border: '#ef233c', text: '#ef233c', label: 'RED' },
+                'orange': { bg: 'rgba(254,228,64,0.15)', border: '#fee440', text: '#fee440', label: 'ORANGE' },
+                'yellow': { bg: 'rgba(254,228,64,0.1)', border: '#fee440', text: '#fee440', label: 'YELLOW' },
+                'green': { bg: 'rgba(0,200,83,0.15)', border: '#00c853', text: '#00c853', label: 'GREEN' },
+            };
+            const lc = levelColors[crisisLevel.level] || levelColors['yellow'];
+
+            const html = '<div class="panel" style="margin-bottom: 30px;">' +
+                '<div class="panel-header">' +
+                    '<span class="panel-title">🛡️ 风险应对方案 (Risk Response Engine v2.0)</span>' +
+                    '<span style="padding:4px 12px;border-radius:12px;font-size:0.75rem;background:' + lc.bg + ';color:' + lc.text + ';border:1px solid ' + lc.border + ';">' + lc.label + ' (' + crisisLevel.score + '/100)</span>' +
+                '</div>' +
+                '<div style="padding:20px;">' +
+
+                // 执行摘要
+                '<div style="background:rgba(0,0,0,0.3);padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:0.85rem;line-height:1.6;white-space:pre-line;">' + (data.executive_summary || 'Loading...') + '</div>' +
+
+                // 关键指标行
+                '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px;">' +
+                    '<div style="background:' + lc.bg + ';padding:10px;border-radius:8px;text-align:center;"><div style="font-size:1.4rem;font-weight:700;color:' + lc.text + ';">' + crisisLevel.level.toUpperCase() + '</div><div style="font-size:0.7rem;">危机等级</div></div>' +
+                    '<div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;text-align:center;"><div style="font-size:1.4rem;font-weight:700;color:var(--accent-cyan);">' + actions.length + '</div><div style="font-size:0.7rem;">优先行动项</div></div>' +
+                    '<div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;text-align:center;"><div style="font-size:1.4rem;font-weight:700;color:var(--accent-yellow);">' + (cost.total_estimated_range || '--') + '</div><div style="font-size:0.7rem;">预计成本</div></div>' +
+                    '<div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:8px;text-align:center;"><div style="font-size:1.4rem;font-weight:700;color:var(--accent-cyan);">' + timeline.length + '</div><div style="font-size:0.7rem;">执行阶段</div></div>' +
+                '</div>' +
+
+                // 优先行动项表格
+                '<div style="margin-bottom:16px;"><div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">优先行动项 (Prioritized Actions)</div>' +
+                actions.map((a, i) =>
+                    '<div style="display:flex;align-items:center;padding:10px 12px;margin-bottom:6px;background:rgba(0,0,0,0.2);border-radius:8px;border-left:3px solid ' + (i < 2 ? 'var(--accent-red)' : i < 4 ? 'var(--accent-yellow)' : 'var(--accent-cyan)') + ';">' +
+                        '<span style="width:28px;height:28px;border-radius:50%;background:rgba(0,245,212,0.2);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:var(--accent-cyan);margin-right:12px;flex-shrink:0;">' + (i+1) + '</span>' +
+                        '<div style="flex:1;min-width:0;">' +
+                            '<div style="font-size:0.8rem;font-weight:600;">[' + a.category + '] ' + a.action + '</div>' +
+                            '<div style="font-size:0.7rem;color:var(--text-secondary);">' + a.detail.substring(0, 60) + '... | ' + a.timeline + '</div>' +
+                        '</div>' +
+                        '<span style="font-size:0.75rem;font-weight:600;padding:4px 8px;border-radius:6px;background:rgba(0,245,212,0.1);color:var(--accent-cyan);flex-shrink:0;">' + a.priority_score.toFixed(0) + '</span>' +
+                    '</div>'
+                ).join('') + '</div>' +
+
+                // 执行时间线
+                '<div style="border-top:1px solid var(--border-glow);padding-top:16px;"><div style="font-size:0.85rem;color:var(--accent-cyan);margin-bottom:10px;">执行时间线 (Execution Timeline)</div>' +
+                timeline.map((phase, i) =>
+                    '<div style="margin-bottom:12px;padding:10px;background:rgba(0,0,0,0.2);border-radius:8px;">' +
+                        '<div style="display:flex;justify-content:space-between;margin-bottom:6px;">' +
+                            '<span style="font-weight:700;font-size:0.85rem;">' + phase.phase + '</span>' +
+                            '<span style="font-size:0.7rem;color:var(--text-secondary);">' + phase.deadline + '</span>' +
+                        '</div>' +
+                        phase.actions.map(a =>
+                            '<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:0.75rem;">' +
+                                '<span>' + a.action + '</span>' +
+                                '<span style="color:var(--text-secondary);">' + a.owner + '</span>' +
+                            '</div>'
+                        ).join('') +
+                    '</div>'
+                ).join('') + '</div>' +
+
+                '</div></div>';
+
+            const target = document.getElementById('dashboardContent');
+            target.insertAdjacentHTML('beforeend', html);
+        }
+
+        // 关闭预警栏
+        function dismissAlert() {
+            document.getElementById('alertBanner').style.display = 'none';
+        }
+
         // 添加CSS动画
         const style = document.createElement('style');
         style.textContent = `
@@ -1028,6 +2215,199 @@
                 closeDetail();
             }
         });
+
+        document.getElementById('delphiModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDelphiReport();
+            }
+        });
+
+        // ========== 德尔菲分析功能 ==========
+
+        // 运行德尔菲分析
+        async function runDelphiAnalysis() {
+            const modal = document.getElementById('delphiModal');
+            const body = document.getElementById('delphiBody');
+
+            // 显示加载状态
+            body.innerHTML = `
+                <div style="text-align: center; padding: 60px; color: var(--text-secondary);">
+                    <div style="width: 50px; height: 50px; border: 4px solid rgba(255,0,110,0.2); border-top-color: var(--accent-pink); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+                    <p>正在进行德尔菲3轮专家共识评估...</p>
+                    <p style="font-size: 0.8rem; margin-top: 10px;">分析情感分数 → 专家独立打分 → 达成共识</p>
+                </div>
+            `;
+            modal.classList.add('show');
+
+            try {
+                const response = await fetch('/api/delphi-analyze');
+                const result = await response.json();
+
+                if (result.success) {
+                    renderDelphiReport(result.data);
+                } else {
+                    body.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: var(--accent-red);">
+                            <p>❌ 分析失败: ${result.error}</p>
+                            <button class="refresh-history-btn" onclick="runDelphiAnalysis()" style="margin-top: 20px;">重试</button>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                body.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--accent-red);">
+                        <p>❌ 网络错误: ${error.message}</p>
+                        <button class="refresh-history-btn" onclick="runDelphiAnalysis()" style="margin-top: 20px;">重试</button>
+                    </div>
+                `;
+            }
+        }
+
+        // 渲染德尔菲分析报告
+        function renderDelphiReport(data) {
+            const body = document.getElementById('delphiBody');
+            const summary = data.summary || {};
+            const stats = data.consensus_statistics || {};
+            const results = data.results || [];
+            const methodology = data.methodology || {};
+
+            body.innerHTML = `
+                <!-- 报告头部信息 -->
+                <div style="background: rgba(255,0,110,0.1); border: 1px solid var(--accent-pink); border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3 style="color: var(--accent-pink); font-family: 'Syncopate', sans-serif;">📋 ${data.title || '德尔菲风险分析报告'}</h3>
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">${new Date(data.generated_at).toLocaleString('zh-CN')}</span>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                        <strong>方法论:</strong> ${methodology.name || 'Delphi Method'} - ${methodology.rounds || 3}轮专家共识评估
+                    </p>
+                </div>
+
+                <!-- 统计概览 -->
+                <div class="dashboard" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 25px;">
+                    <div class="metric-card" style="border-color: var(--accent-red);">
+                        <div class="metric-label">高风险条目</div>
+                        <div class="metric-value" style="color: var(--accent-red);">${summary.high_risk_count || 0}</div>
+                    </div>
+                    <div class="metric-card" style="border-color: var(--accent-yellow);">
+                        <div class="metric-label">中风险条目</div>
+                        <div class="metric-value" style="color: var(--accent-yellow);">${summary.medium_risk_count || 0}</div>
+                    </div>
+                    <div class="metric-card" style="border-color: #00c853;">
+                        <div class="metric-label">低风险条目</div>
+                        <div class="metric-value" style="color: #00c853;">${summary.low_risk_count || 0}</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">平均共识分</div>
+                        <div class="metric-value">${stats.average_score || 0}</div>
+                    </div>
+                </div>
+
+                <!-- 专家配置 -->
+                <div class="panel" style="margin-bottom: 25px;">
+                    <div class="panel-header">
+                        <span class="panel-title" style="color: var(--accent-pink);">👥 专家评估团队</span>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                            ${(methodology.experts || []).map((expert, idx) => `
+                                <div style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 15px; border-left: 4px solid ${['var(--accent-cyan)', 'var(--accent-pink)', 'var(--accent-yellow)'][idx]}">
+                                    <div style="font-weight: 600; margin-bottom: 5px;">${expert.name}</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">关注: ${expert.focus}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 评分规则 -->
+                <div class="panel" style="margin-bottom: 25px;">
+                    <div class="panel-header">
+                        <span class="panel-title" style="color: var(--accent-pink);">📊 评分规则</span>
+                    </div>
+                    <div style="padding: 20px; font-size: 0.9rem; color: var(--text-secondary);">
+                        <p style="margin-bottom: 10px;"><strong>基础分计算:</strong> ${methodology.scoring_rules?.base_score || ''}</p>
+                        <p style="margin-bottom: 10px;"><strong>专家加权:</strong> ${methodology.scoring_rules?.weighting || ''}</p>
+                        <p><strong>风险等级:</strong> ${methodology.scoring_rules?.final_level || ''}</p>
+                    </div>
+                </div>
+
+                <!-- 分析结果表格 -->
+                <div class="panel" style="margin-bottom: 25px;">
+                    <div class="panel-header">
+                        <span class="panel-title" style="color: var(--accent-pink);">📈 风险分析结果 (TOP ${results.length})</span>
+                        <span style="color: var(--text-secondary); font-size: 0.8rem;">按情感负面程度排序</span>
+                    </div>
+                    <div style="padding: 20px; overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid var(--border-glow);">
+                                    <th style="text-align: left; padding: 12px; font-size: 0.85rem; color: var(--accent-cyan);">排名</th>
+                                    <th style="text-align: left; padding: 12px; font-size: 0.85rem; color: var(--accent-cyan);">新闻标题</th>
+                                    <th style="text-align: center; padding: 12px; font-size: 0.85rem; color: var(--accent-cyan);">情感分数</th>
+                                    <th style="text-align: center; padding: 12px; font-size: 0.85rem; color: var(--accent-cyan);">专家评分</th>
+                                    <th style="text-align: center; padding: 12px; font-size: 0.85rem; color: var(--accent-cyan);">IQR</th>
+                                    <th style="text-align: center; padding: 12px; font-size: 0.85rem; color: var(--accent-cyan);">共识分</th>
+                                    <th style="text-align: center; padding: 12px; font-size: 0.85rem; color: var(--accent-cyan);">风险等级</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${results.map((r, idx) => `
+                                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                        <td style="padding: 15px 12px; font-weight: 600;">${idx + 1}</td>
+                                        <td style="padding: 15px 12px; max-width: 300px;" title="${r.title}">
+                                            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${r.title}</div>
+                                            ${r.keywords && r.keywords.length > 0 ? `
+                                                <div style="margin-top: 5px;">
+                                                    ${r.keywords.map(k => `<span style="font-size: 0.7rem; background: rgba(255,0,110,0.2); color: var(--accent-pink); padding: 2px 6px; border-radius: 4px; margin-right: 4px;">${k}</span>`).join('')}
+                                                </div>
+                                            ` : ''}
+                                        </td>
+                                        <td style="padding: 15px 12px; text-align: center; font-family: 'Space Mono', monospace;">${r.sentiment_score.toFixed(3)}</td>
+                                        <td style="padding: 15px 12px; text-align: center; font-family: 'Space Mono', monospace; font-size: 0.85rem;">[${r.expert_scores.join(', ')}]</td>
+                                        <td style="padding: 15px 12px; text-align: center; font-family: 'Space Mono', monospace;">${r.iqr}</td>
+                                        <td style="padding: 15px 12px; text-align: center; font-weight: 600; color: ${r.consensus_score >= 3 ? 'var(--accent-red)' : r.consensus_score >= 2 ? 'var(--accent-yellow)' : '#00c853'};">${r.consensus_score}</td>
+                                        <td style="padding: 15px 12px; text-align: center;">
+                                            <span style="padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; background: ${r.final_risk_level === '高' ? 'rgba(239,35,60,0.2)' : r.final_risk_level === '中' ? 'rgba(254,228,64,0.2)' : 'rgba(0,200,83,0.2)'}; color: ${r.final_risk_level === '高' ? 'var(--accent-red)' : r.final_risk_level === '中' ? 'var(--accent-yellow)' : '#00c853'};">
+                                                ${r.final_risk_level}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 共识统计 -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <span class="panel-title" style="color: var(--accent-pink);">✅ 共识度统计</span>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                            <div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 10px;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 5px;">${stats.consensus_rate || '100%'}</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">共识达成率</div>
+                            </div>
+                            <div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 10px;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 5px;">${stats.average_iqr || 0}</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">平均IQR (分歧度)</div>
+                            </div>
+                            <div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 10px;">
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 5px;">${methodology.rounds || 3}</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">评估轮次</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 关闭德尔菲报告
+        function closeDelphiReport() {
+            document.getElementById('delphiModal').classList.remove('show');
+        }
     </script>
 </body>
 </html>

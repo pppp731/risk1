@@ -1,0 +1,118 @@
+{
+  "name": "RiskSentinel MCP",
+  "version": "1.0.0",
+  "description": "椋庨櫓鍝ㄥ叺鍏ㄩ噺鏁版嵁閲囬泦 MCP 閰嶇疆",
+  "servers": {
+    "sqlite": {
+      "type": "sqlite",
+      "config": {
+        "database_path": "./data/risk_sentinel.db",
+        "backup_enabled": true,
+        "backup_interval": "24h"
+      },
+      "tables": {
+        "news_raw": {
+          "description": "鍘熷鏂伴椈鏁版嵁",
+          "columns": {
+            "id": "INTEGER PRIMARY KEY AUTOINCREMENT",
+            "title": "TEXT NOT NULL",
+            "description": "TEXT",
+            "content": "TEXT",
+            "url": "TEXT UNIQUE",
+            "source": "TEXT",
+            "source_type": "TEXT",
+            "published_at": "DATETIME",
+            "fetched_at": "DATETIME DEFAULT CURRENT_TIMESTAMP",
+            "sentiment_score": "REAL",
+            "risk_score": "REAL",
+            "risk_level": "TEXT"
+          },
+          "indexes": ["published_at", "source", "risk_level"]
+        },
+        "risk_events": {
+          "description": "椋庨櫓浜嬩欢鑱氬悎",
+          "columns": {
+            "id": "INTEGER PRIMARY KEY AUTOINCREMENT",
+            "event_type": "TEXT NOT NULL",
+            "event_title": "TEXT NOT NULL",
+            "related_news_ids": "TEXT",
+            "first_detected": "DATETIME",
+            "last_updated": "DATETIME",
+            "severity": "INTEGER",
+            "status": "TEXT DEFAULT 'active'"
+          },
+          "indexes": ["event_type", "first_detected", "status"]
+        },
+        "data_collection_log": {
+          "description": "鏁版嵁閲囬泦鏃ュ織",
+          "columns": {
+            "id": "INTEGER PRIMARY KEY AUTOINCREMENT",
+            "source": "TEXT",
+            "start_time": "DATETIME",
+            "end_time": "DATETIME",
+            "records_fetched": "INTEGER",
+            "records_new": "INTEGER",
+            "records_duplicate": "INTEGER",
+            "status": "TEXT"
+          }
+        }
+      }
+    },
+    "filesystem": {
+      "type": "filesystem",
+      "config": {
+        "base_path": "./data",
+        "allowed_extensions": [".json", ".csv", ".log", ".db"],
+        "max_file_size": "100MB"
+      }
+    },
+    "web_fetcher": {
+      "type": "http",
+      "config": {
+        "rate_limit": {
+          "requests_per_second": 2,
+          "burst": 5
+        },
+        "timeout": 30,
+        "retry_policy": {
+          "max_retries": 3,
+          "backoff": "exponential"
+        }
+      }
+    }
+  },
+  "pipelines": {
+    "full_collection": {
+      "description": "鍏ㄩ噺鏁版嵁閲囬泦娴佺▼",
+      "steps": [
+        {
+          "name": "check_existing",
+          "action": "query_sqlite",
+          "sql": "SELECT MAX(fetched_at) as last_fetch FROM news_raw WHERE source = ?",
+          "params": ["{{source}}"]
+        },
+        {
+          "name": "fetch_news",
+          "action": "http_get",
+          "conditional": "{{steps.check_existing.result.length === 0 || new Date() - new Date(steps.check_existing.result[0].last_fetch) > 3600000}}"
+        },
+        {
+          "name": "deduplicate",
+          "action": "semantic_dedup",
+          "threshold": 0.85
+        },
+        {
+          "name": "save_to_db",
+          "action": "insert_sqlite",
+          "table": "news_raw",
+          "mode": "upsert"
+        },
+        {
+          "name": "log_collection",
+          "action": "insert_sqlite",
+          "table": "data_collection_log"
+        }
+      ]
+    }
+  }
+}
